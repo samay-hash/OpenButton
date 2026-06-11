@@ -1,120 +1,63 @@
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/1103aebf-c59b-4ed6-b830-b82aa1b71f80" alt="Tokokino Logo" width="184" height="184" />
-</p>
+<div align="center">
+  <img src="./git.png" alt="Open Button Hero Image" width="100%" style="border-radius: 12px; margin-bottom: 20px;" />
+  <h1 align="center">
+    <img src="https://readme-typing-svg.herokuapp.com?font=Inter&weight=700&size=48&duration=3000&pause=1000&color=FFFFFF&center=true&vCenter=true&width=600&height=80&lines=O+P+E+N++B+U+T+T+O+N;Premium+UI+Components;AI+UI%2FUX+Audits" alt="Typing SVG" />
+  </h1>
+  <p align="center">
+    <b>Elevate your digital presence with state-of-the-art interactive UI and AI-driven design intelligence.</b>
+  </p>
+</div>
 
-<h1 align="center">Tokokino</h1>
+---
 
-<p align="center">
-  <img alt="Next.js" src="https://img.shields.io/badge/Next.js-15.5.18-black?logo=next.js" />
-  <img alt="React" src="https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white" />
-  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white" />
-  <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?logo=tailwindcss&logoColor=white" />
-  <img alt="Zustand" src="https://img.shields.io/badge/Zustand-State%20Management-7A3E2B" />
-  <img alt="Cloudflare" src="https://img.shields.io/badge/Cloudflare-F38020?logo=cloudflare&logoColor=white" />
-</p>
+## ⚡ Click-Worthy Components, Out of the Box.
+**Open Button** is a curated ecosystem of ultra-premium, production-ready React components designed to make your application look like a $10M+ tech startup instantly. Say goodbye to plain, boring UI and hello to state-of-the-art skeuomorphic, glassmorphism, and neon-layered aesthetics.
 
-Tokokino is a client-heavy screenshot composer built with Next.js. It focuses on fast, in-browser editing with backgrounds, overlays, frames, and export/share flows backed by Cloudflare services.
+### 🌟 What We Offer
 
-## Stack
+* **💎 Premium UI Components:** High-end, interactive buttons and UI elements built with React, Tailwind CSS, and Framer Motion. Ready to drop directly into your codebase.
+* **🤖 AI UI/UX Audit:** Not sure what to upgrade? Enter your website URL, and our AI engine will perform a deep heuristic evaluation. We break down visual hierarchy, validate accessibility, and provide component-level upgrade recommendations.
+* **🎨 Custom Design to Code Services:** Have a Figma file or a screenshot? We translate your custom designs into pixel-perfect, interactive code (React/Vue/HTML) starting at just ₹200, delivered within 48 hours.
 
-- Next.js `15.5.18`, React `19.2.x`, TypeScript `5.9.x`
-- Zustand for editor state
-- Tailwind CSS v4 + shadcn/ui
-- OpenNext Cloudflare for build/deploy runtime
-- Cloudflare D1 (`TOKOKINO_DB`) for app/auth metadata
-- Cloudflare R2 for share/draft/media storage
+---
 
-## Local setup
+## 🚀 Quick Start
 
-### Requirements
-
-- Node.js 20+
-- pnpm 9+
-
-### Install
+Get the project running locally in seconds:
 
 ```bash
-git clone https://github.com/shivabhattacharjee/tokokino.git
-cd tokokino
+# Clone the repository
+git clone https://github.com/samay-hash/openbutton.git
+
+# Navigate into the project directory
+cd openbutton
+
+# Install dependencies (using pnpm)
 pnpm install
+
+# Start the development server
+pnpm run dev
 ```
+*Open [http://localhost:3000](http://localhost:3000) to view it in your browser.*
 
-### Environment
+---
 
-Copy the example env file and fill in the values you need:
+## ✨ Featured Aesthetics
 
-```bash
-cp .env.example .env.local
-```
+Our component library focuses on top-tier design trends:
+- **Layered Glass:** Skeuomorphic glowing edges with soft inner shadows.
+- **Minimal Dark:** Sleek, high-contrast elements for modern SaaS platforms.
+- **Shimmer Trace:** Subtle, dynamic metallic shines.
+- **Ghost Sweep:** Clean, minimalist interactions with smooth gradient reveals.
 
-### Run
+---
 
-```bash
-pnpm dev
-```
+## 🤝 Let's Build Together
 
-## Docker
+Want a specific animation or a fully custom landing page? 
+Visit our live platform, submit your requirements, and let us handle the code. We bridge the gap between world-class design and flawless frontend execution.
 
-Build and run the production image:
+<div align="center">
+  <sub>Built with ❤️ by the Open Button Team</sub>
+</div>
 
-```bash
-docker build -t tokokino .
-docker run --env-file .env.local -p 3000:3000 tokokino
-```
-
-Run the dev target:
-
-```bash
-docker build --target dev -t tokokino-dev .
-docker run --env-file .env.local -p 3000:3000 -v "$PWD:/app" tokokino-dev
-```
-
-The production image runs `pnpm build:next` during build and starts with `pnpm start`.
-
-## Database (D1)
-
-`wrangler.jsonc` configures the D1 binding as `TOKOKINO_DB`.
-
-Apply migrations:
-
-```bash
-pnpm exec wrangler d1 migrations apply tokokino-db --local
-pnpm exec wrangler d1 migrations apply tokokino-db --remote
-```
-
-## Scripts
-
-- `pnpm dev` - Next.js dev with Turbopack
-- `pnpm typecheck` - TypeScript check (`tsc --noEmit`)
-- `pnpm lint` - ESLint
-- `pnpm lint:fix` - ESLint autofix
-- `pnpm build` - OpenNext Cloudflare build
-- `pnpm build:next` - Next.js production build
-- `pnpm format:check` - Prettier check for TypeScript files
-- `pnpm preview` - OpenNext Cloudflare preview
-- `pnpm deploy` - OpenNext Cloudflare deploy
-- `pnpm cf-typegen` - regenerate `cloudflare-env.d.ts` from Wrangler bindings
-- `pnpm build:thumbs` - build overlay thumbs
-- `pnpm build:backgrounds` - build background thumbs/manifest
-
-## Assets
-
-Install local overlay/device assets:
-
-```bash
-bash scripts/install-assets-local.sh
-```
-
-Paths used:
-
-- `public/assets/overlays/thumbs`
-- `public/assets/device-mockups`
-- `public/assets/device-mockups/thumbnails`
-
-## Contributing
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md).
-
-## License
-
-AGPL-3.0. See [LICENSE](./LICENSE).
