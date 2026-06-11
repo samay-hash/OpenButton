@@ -1,0 +1,138 @@
+import { NextResponse } from "next/server"
+
+import { requireSession } from "@/lib/api-auth"
+import { enforceRateLimit } from "@/lib/rate-limit"
+import {
+  MAX_USER_DRAFT_STORAGE_BYTES,
+  countDrafts,
+  createDraft,
+  getUserDraftStorageUsage,
+  listDrafts,
+} from "@/lib/draft-db"
+import {
+  MAX_DRAFT_BYTES,
+  countCanvasesInDraftState,
+  parseDraftSaveBody,
+} from "@/lib/schemas/draft"
+
+export const runtime = "nodejs"
+
+export async function GET(request: Request) {
+  const auth = await requireSession(request)
+  if (!auth.ok) return auth.response
+
+  const url = new URL(request.url)
+  const limit = Math.min(
+    Math.max(Number(url.searchParams.get("limit") ?? "9"), 1),
+    50
+  )
+  const offset = Math.max(Number(url.searchParams.get("offset") ?? "0"), 0)
+  const sort = url.searchParams.get("sort") === "oldest" ? "oldest" : "latest"
+
+  const [draftRows, total, storageUsed] = await Promise.all([
+    listDrafts(auth.session.user.id, { limit, offset, sort }),
+    countDrafts(auth.session.user.id),
+    getUserDraftStorageUsage(auth.session.user.id),
+  ])
+
+  return NextResponse.json({
+    drafts: draftRows.map((draft) => ({
+      id: draft.id,
+      name: draft.name,
+      canvasCount: draft.canvasCount,
+      byteSize: draft.byteSize,
+      createdAt: draft.createdAt,
+      updatedAt: draft.updatedAt,
+      thumbnailUrl: draft.thumbnailKey ? `/api/drafts/${draft.id}/thumb` : null,
+    })),
+    total,
+    hasMore: offset + draftRows.length < total,
+    storage: { used: storageUsed, limit: MAX_USER_DRAFT_STORAGE_BYTES },
+  })
+}
+
+export async function POST(request: Request) {
+  const auth = await requireSession(request)
+  if (!auth.ok) return auth.response
+
+  const limited = await enforceRateLimit({
+    limiter: "WRITE_RATE_LIMITER",
+    scope: "draft-create",
+    id: auth.session.user.id,
+  })
+  if (limited) return limited
+
+  const contentLength = Number(request.headers.get("content-length") ?? "0")
+  if (contentLength > MAX_DRAFT_BYTES) {
+    return NextResponse.json(
+      { error: "Project is too large to save" },
+      { status: 413 }
+    )
+  }
+
+  const bodyText = await request.text().catch(() => null)
+  if (!bodyText) {
+    return NextResponse.json({ error: "Invalid body" }, { status: 400 })
+  }
+
+  let body: unknown
+  try {
+    body = JSON.parse(bodyText)
+  } catch {
+    return NextResponse.json({ error: "Invalid body" }, { status: 400 })
+  }
+  const parsed = parseDraftSaveBody(body, { requireName: true })
+  if (!parsed.ok) {
+    return NextResponse.json({ error: parsed.error }, { status: 400 })
+  }
+
+  const stateBytes = new TextEncoder().encode(JSON.stringify(parsed.state))
+  if (stateBytes.byteLength > MAX_DRAFT_BYTES) {
+    return NextResponse.json(
+      { error: "Project is too large to save" },
+      { status: 413 }
+    )
+  }
+
+  const storageUsed = await getUserDraftStorageUsage(auth.session.user.id)
+  if (storageUsed + stateBytes.byteLength > MAX_USER_DRAFT_STORAGE_BYTES) {
+    return NextResponse.json(
+      {
+        error: "Storage limit reached",
+        storage: { used: storageUsed, limit: MAX_USER_DRAFT_STORAGE_BYTES },
+      },
+      { status: 413 }
+    )
+  }
+
+  const canvasCount = countCanvasesInDraftState(parsed.state)
+  const id = crypto.randomUUID()
+
+  try {
+    await createDraft({
+      id,
+      userId: auth.session.user.id,
+      name: parsed.name!,
+      canvasCount,
+      byteSize: stateBytes.byteLength,
+      stateBytes,
+      thumbnailKey: null,
+    })
+  } catch (error) {
+    console.error(error)
+    const message =
+      error instanceof Error && error.message
+        ? error.message
+        : "Could not save draft"
+    return NextResponse.json({ error: message }, { status: 500 })
+  }
+
+  return NextResponse.json({
+    draft: {
+      id,
+      name: parsed.name!,
+      canvasCount,
+      byteSize: stateBytes.byteLength,
+    },
+  })
+}
