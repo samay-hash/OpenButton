@@ -1,8 +1,6 @@
 <div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=2,12,23,5&height=220&section=header&text=O%20P%20E%20N%20%20B%20U%20T%20T%20O%20N&fontSize=50&fontColor=ffffff&animation=twinkling" width="100%" style="border-radius: 16px;" />
   <br />
-  <a href="https://github.com/samay-hash/openbutton">
-    <img src="./git.png" alt="Open Button Hero Image" width="100%" style="border-radius: 16px; border: 1px solid #333;" />
-  </a>
   <br />
   <br />
 
