@@ -106,7 +106,7 @@ export function FinalCta() {
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
           </a>
           <a
-            href="https://github.com/samay-samrat/openbutton"
+            href="https://github.com/samay-hash/openbutton"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-md border border-border/70 bg-background/45 px-5 py-2.5 text-sm font-medium text-foreground/70 backdrop-blur-sm transition hover:border-foreground/30 hover:text-foreground"

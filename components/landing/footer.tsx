@@ -27,7 +27,7 @@ const FOOTER_LINKS = [
     title: "Social",
     links: [
       { label: "Twitter / X", href: "#" },
-      { label: "GitHub", href: "https://github.com/samay-samrat/openbutton" },
+      { label: "GitHub", href: "https://github.com/samay-hash/openbutton" },
       { label: "Discord", href: "#" },
       { label: "Product Hunt", href: "#" },
     ],

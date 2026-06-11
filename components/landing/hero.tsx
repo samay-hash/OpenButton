@@ -400,7 +400,7 @@ export function Hero() {
               }}
             />
             <a
-              href="https://github.com/samay-samrat/openbutton"
+              href="https://github.com/samay-hash/openbutton"
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 rounded-md border border-border/70 bg-background/40 px-5 py-2.5 text-sm font-medium text-foreground/70 backdrop-blur-sm transition hover:border-accent-foreground/40 hover:text-foreground"
