@@ -1,16 +1,10 @@
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=2,12,23,5&height=220&section=header&text=O%20P%20E%20N%20%20B%20U%20T%20T%20O%20N&fontSize=50&fontColor=ffffff&animation=twinkling" width="100%" style="border-radius: 16px;" />
+  <br />
+  <a href="https://github.com/samay-hash/openbutton">
+    <img src="./public/header.svg" alt="Open Button" width="100%" />
+  </a>
   <br />
   <br />
-  <br />
-
-  <h1>
-    <img src="https://readme-typing-svg.herokuapp.com?font=Inter&weight=800&size=52&duration=3000&pause=1000&color=FFFFFF&center=true&vCenter=true&width=600&height=80&lines=O+P+E+N++B+U+T+T+O+N;Premium+UI+Architecture;AI-Driven+Design" alt="Open Button" />
-  </h1>
-
-  <p>
-    <strong>Next-Generation UI Components & AI Heuristic Audits for Modern Web Applications.</strong>
-  </p>
 
   <p>
     <a href="https://github.com/samay-hash/openbutton"><img src="https://img.shields.io/badge/React-19.0.0-000000?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" /></a>
