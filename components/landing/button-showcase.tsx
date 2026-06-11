@@ -157,6 +157,7 @@ export function ButtonShowcase() {
           {filtered.map((btn, i) => {
             const Renderer = BUTTON_RENDERERS[btn.style]
             const isHovered = hoveredId === btn.id
+            const isPremium = btn.name === "Premium Glow"
 
             return (
               <motion.div
@@ -170,14 +171,20 @@ export function ButtonShowcase() {
                 onMouseEnter={() => setHoveredId(btn.id)}
                 onMouseLeave={() => setHoveredId(null)}
               >
-                <div className="flex h-full flex-col rounded-[8px] border border-border/40 bg-background/60 transition-colors group-hover:bg-background/80">
+                <div className="relative flex h-full flex-col overflow-hidden rounded-[8px] border border-border/40 bg-background/60 transition-colors group-hover:bg-background/80">
                   {/* Live button preview area */}
-                  <div className="bg-dot-grid relative flex min-h-[10rem] items-center justify-center p-6">
+                  <div
+                    className={`bg-dot-grid relative flex min-h-[10rem] items-center justify-center p-6 transition-all duration-300 ${
+                      !isPremium
+                        ? "pointer-events-none select-none opacity-40 blur-[5px]"
+                        : ""
+                    }`}
+                  >
                     {Renderer && <Renderer label={btn.name} />}
 
                     {/* Hover state indicator */}
                     <AnimatePresence>
-                      {isHovered && (
+                      {isHovered && isPremium && (
                         <motion.div
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
@@ -191,6 +198,27 @@ export function ButtonShowcase() {
                       )}
                     </AnimatePresence>
                   </div>
+
+                  {/* Sign In Overlay for Non-Premium Buttons */}
+                  {!isPremium && (
+                    <div className="absolute inset-x-0 top-0 z-20 flex h-[10rem] items-center justify-center bg-background/5 backdrop-blur-[2px]">
+                      <div className="flex items-center gap-2 rounded-full border border-border/60 bg-background/95 px-4 py-2 font-mono text-[11px] font-semibold tracking-wide text-foreground shadow-xl">
+                        <svg
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          viewBox="0 0 24 24"
+                          className="size-3.5"
+                        >
+                          <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                        </svg>
+                        Sign in to Unlock
+                      </div>
+                    </div>
+                  )}
 
                   {/* Card info */}
                   <div className="flex items-center justify-between border-t border-border/40 px-4 py-3">
@@ -227,11 +255,16 @@ export function ButtonShowcase() {
                     </div>
                   </div>
 
-                  {/* Action bar */}
+                    {/* Disabled Action bar for non-premium */}
                   <div className="flex items-center border-t border-border/40">
                     <button
                       type="button"
-                      className="flex flex-1 items-center justify-center gap-1.5 py-2.5 font-mono text-[10px] tracking-wider text-foreground/50 uppercase transition-colors hover:bg-primary/[0.06] hover:text-primary"
+                      disabled={!isPremium}
+                      className={`flex flex-1 items-center justify-center gap-1.5 py-2.5 font-mono text-[10px] uppercase tracking-wider transition-colors ${
+                        !isPremium
+                          ? "cursor-not-allowed text-foreground/30"
+                          : "text-foreground/50 hover:bg-primary/[0.06] hover:text-primary"
+                      }`}
                     >
                       <svg
                         viewBox="0 0 16 16"
@@ -247,7 +280,12 @@ export function ButtonShowcase() {
                     <span className="h-6 w-px bg-border/40" />
                     <button
                       type="button"
-                      className="flex flex-1 items-center justify-center gap-1.5 py-2.5 font-mono text-[10px] tracking-wider text-primary uppercase transition-colors hover:bg-primary/[0.08] hover:text-primary"
+                      disabled={!isPremium}
+                      className={`flex flex-1 items-center justify-center gap-1.5 py-2.5 font-mono text-[10px] uppercase tracking-wider transition-colors ${
+                        !isPremium
+                          ? "cursor-not-allowed text-foreground/30"
+                          : "text-primary hover:bg-primary/[0.08]"
+                      }`}
                     >
                       Buy Now
                       <svg
