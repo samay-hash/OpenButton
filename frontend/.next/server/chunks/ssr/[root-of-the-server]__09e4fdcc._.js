@@ -4574,7 +4574,7 @@ function ButtonShowcase() {
                                 className: "relative flex h-full flex-col overflow-hidden rounded-[8px] border border-border/40 bg-background/60 transition-colors group-hover:bg-background/80",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: `bg-dot-grid relative flex min-h-[10rem] items-center justify-center p-6 transition-all duration-300 ${!isPremium ? "pointer-events-none select-none opacity-40 blur-[5px]" : ""}`,
+                                        className: `bg-dot-grid relative flex min-h-[10rem] items-center justify-center p-6 transition-all duration-300 ${!isPremium ? "pointer-events-none select-none opacity-40 grayscale" : ""}`,
                                         children: [
                                             Renderer && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Renderer, {
                                                 label: btn.name
@@ -4628,45 +4628,35 @@ function ButtonShowcase() {
                                         columnNumber: 19
                                     }, this),
                                     !isPremium && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "absolute inset-x-0 top-0 z-20 flex h-[10rem] items-center justify-center bg-background/30 backdrop-blur-md",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "flex items-center gap-2 rounded-xl border border-white/20 bg-white/[0.07] px-5 py-2.5 font-mono text-[11px] font-bold tracking-wider text-foreground shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_24px_-8px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all duration-300 hover:scale-[1.03] hover:border-white/30 hover:bg-white/[0.14] uppercase",
+                                        className: "absolute right-3 top-3 z-20 flex size-7 items-center justify-center rounded-full border border-border/40 bg-background/60 text-foreground/40 shadow-sm",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                            fill: "none",
+                                            stroke: "currentColor",
+                                            strokeWidth: "2",
+                                            strokeLinecap: "round",
+                                            strokeLinejoin: "round",
+                                            viewBox: "0 0 24 24",
+                                            className: "size-3.5",
                                             children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                                                    fill: "none",
-                                                    stroke: "currentColor",
-                                                    strokeWidth: "2.5",
-                                                    strokeLinecap: "round",
-                                                    strokeLinejoin: "round",
-                                                    viewBox: "0 0 24 24",
-                                                    className: "size-4",
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("rect", {
-                                                            width: "18",
-                                                            height: "11",
-                                                            x: "3",
-                                                            y: "11",
-                                                            rx: "2",
-                                                            ry: "2"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                            lineNumber: 215,
-                                                            columnNumber: 27
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                                            d: "M7 11V7a5 5 0 0 1 10 0v4"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                            lineNumber: 216,
-                                                            columnNumber: 27
-                                                        }, this)
-                                                    ]
-                                                }, void 0, true, {
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("rect", {
+                                                    width: "18",
+                                                    height: "11",
+                                                    x: "3",
+                                                    y: "11",
+                                                    rx: "2",
+                                                    ry: "2"
+                                                }, void 0, false, {
                                                     fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                    lineNumber: 206,
+                                                    lineNumber: 214,
                                                     columnNumber: 25
                                                 }, this),
-                                                "Sign in to Unlock"
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                                    d: "M7 11V7a5 5 0 0 1 10 0v4"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
+                                                    lineNumber: 215,
+                                                    columnNumber: 25
+                                                }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
@@ -4689,7 +4679,7 @@ function ButtonShowcase() {
                                                         children: btn.name
                                                     }, void 0, false, {
                                                         fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                        lineNumber: 226,
+                                                        lineNumber: 223,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4700,14 +4690,14 @@ function ButtonShowcase() {
                                                                 children: btn.category
                                                             }, void 0, false, {
                                                                 fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                                lineNumber: 230,
+                                                                lineNumber: 227,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 className: "h-2.5 w-px bg-border/50"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                                lineNumber: 233,
+                                                                lineNumber: 230,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4717,24 +4707,24 @@ function ButtonShowcase() {
                                                                         children: tech
                                                                     }, tech, false, {
                                                                         fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                                        lineNumber: 236,
+                                                                        lineNumber: 233,
                                                                         columnNumber: 29
                                                                     }, this))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                                lineNumber: 234,
+                                                                lineNumber: 231,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                        lineNumber: 229,
+                                                        lineNumber: 226,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                lineNumber: 225,
+                                                lineNumber: 222,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4750,18 +4740,18 @@ function ButtonShowcase() {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                    lineNumber: 249,
+                                                    lineNumber: 246,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                lineNumber: 247,
+                                                lineNumber: 244,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                        lineNumber: 224,
+                                        lineNumber: 221,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4782,26 +4772,26 @@ function ButtonShowcase() {
                                                             d: "M8 1.5 9.8 5.2l4 .6-2.9 2.8.7 4-3.6-1.9-3.6 1.9.7-4-2.9-2.8 4-.6L8 1.5Z"
                                                         }, void 0, false, {
                                                             fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                            lineNumber: 276,
+                                                            lineNumber: 273,
                                                             columnNumber: 25
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                        lineNumber: 269,
+                                                        lineNumber: 266,
                                                         columnNumber: 23
                                                     }, this),
                                                     "Save"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                lineNumber: 260,
+                                                lineNumber: 257,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "h-6 w-px bg-border/40"
                                             }, void 0, false, {
                                                 fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                lineNumber: 280,
+                                                lineNumber: 277,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$openbutton$2f$openbutton$2d$main$2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$18_$40$babel$2b$core$40$7$2e$29$2e$0_$40$opentelemetry$2b$api$40$1$2e$9$2e$1_react$2d$dom$40$19$2e$2$2e$6_react$40$19$2e$2$2e$6_$5f$react$40$19$2e$2$2e$6$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4822,24 +4812,24 @@ function ButtonShowcase() {
                                                             d: "M3 8h10m0 0L9 4m4 4-4 4"
                                                         }, void 0, false, {
                                                             fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                            lineNumber: 300,
+                                                            lineNumber: 297,
                                                             columnNumber: 25
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                        lineNumber: 291,
+                                                        lineNumber: 288,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                                lineNumber: 281,
+                                                lineNumber: 278,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/openbutton/openbutton-main/frontend/components/landing/button-showcase.tsx",
-                                        lineNumber: 259,
+                                        lineNumber: 256,
                                         columnNumber: 19
                                     }, this)
                                 ]
