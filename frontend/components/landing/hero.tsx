@@ -301,7 +301,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease, delay: 0.1 }}
-            className="mt-3 text-[2rem] leading-[1.06] font-medium tracking-[-0.03em] text-balance sm:text-5xl lg:text-[4.2rem]"
+            className="mt-12 sm:mt-16 lg:mt-20 text-[2rem] leading-[1.06] font-medium tracking-[-0.03em] text-balance sm:text-5xl lg:text-[4.2rem]"
           >
             Click Worthy components,
             <br />
