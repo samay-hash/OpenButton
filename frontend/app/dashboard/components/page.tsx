@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 "use client"
 
 import { useState, useEffect } from "react"
@@ -102,7 +107,7 @@ export default function ComponentsPage() {
             "Authorization": `Bearer ${token}`
           }
         })
-        const data = await res.json()
+        const data = (await res.json()) as any
         if (data && data.data) {
           // Merge db components state with frontend INITIAL_COMPONENTS
           const fetchedComponents = data.data
@@ -136,7 +141,7 @@ export default function ComponentsPage() {
         },
         body: JSON.stringify({ componentId: comp.id })
       })
-      const data = await res.json()
+      const data = (await res.json()) as any
       
       if (!data.success) {
         toast.error("Failed to initiate payment")
@@ -162,7 +167,7 @@ export default function ComponentsPage() {
               componentId: comp.id
             })
           })
-          const verifyData = await verifyRes.json()
+          const verifyData = (await verifyRes.json()) as any
           if (verifyData.success) {
             toast.success("Payment successful! Component unlocked.")
             setComponentsList(prev => prev.map(c => c.id === comp.id ? { ...c, unlocked: true } : c))
