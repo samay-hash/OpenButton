@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import { BrandLogo } from "@/components/brand-logo"
 
@@ -95,6 +95,23 @@ const SECTIONS = [
 export function DashboardSidebar() {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [userName, setUserName] = useState("User")
+  const [userEmail, setUserEmail] = useState("Premium Account")
+  
+  useEffect(() => {
+    const raw = localStorage.getItem("user")
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw) as { name?: string; email?: string }
+        if (parsed.name) setUserName(parsed.name)
+        if (parsed.email) setUserEmail(parsed.email)
+      } catch (err) {
+        // Handle parse error silently
+      }
+    }
+  }, [])
+
+  const initials = userName.split(" ").map(n => n[0]).join("").toUpperCase().substring(0, 2)
 
   const isActive = (href: string) => {
     if (href === "/dashboard") return pathname === "/dashboard"
@@ -146,14 +163,12 @@ export function DashboardSidebar() {
           </div>
           <div className="border-t border-border/40 px-4 py-3">
             <div className="flex items-center gap-2 rounded-lg bg-primary/[0.06] px-3 py-2">
-              <div className="flex size-7 items-center justify-center rounded-full bg-primary/20 text-primary">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="size-3.5">
-                  <path d="M12 2L2 7l10 5 10-5-10-5Z" />
-                </svg>
+              <div className="flex size-7 items-center justify-center rounded-full bg-primary/20 font-mono text-[10px] font-bold text-primary">
+                {initials}
               </div>
               <div className="min-w-0">
-                <p className="truncate text-[11px] font-semibold text-foreground/80">Pro Plan</p>
-                <p className="truncate text-[10px] text-foreground/40">All features unlocked</p>
+                <p className="truncate text-[11px] font-semibold text-foreground/80">{userName}</p>
+                <p className="truncate text-[10px] text-foreground/40">{userEmail}</p>
               </div>
             </div>
           </div>

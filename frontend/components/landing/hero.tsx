@@ -296,43 +296,6 @@ export function Hero() {
         className="mx-auto flex w-full flex-col items-center gap-8 text-center"
       >
         <div className="flex max-w-5xl flex-col items-center text-center">
-          {/* Announcement Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease }}
-            className="mb-8"
-          >
-            <button
-              onClick={() =>
-                document
-                  .getElementById("ai-audit")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="group flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary transition-all hover:bg-primary/10"
-            >
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex size-2 rounded-full bg-primary"></span>
-              </span>
-              Try our new AI UI/UX Analyzer
-              <RiArrowRightLine className="size-3 transition-transform group-hover:translate-x-1" />
-            </button>
-          </motion.div>
-
-          {/* Eyebrow badge */}
-          <motion.span
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease, delay: 0.05 }}
-            className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/50 px-3 py-1 font-mono text-[10px] tracking-widest uppercase backdrop-blur-sm"
-          >
-            <span className="inline-block size-1.5 animate-pulse rounded-full bg-accent-foreground" />
-            <span className="text-foreground/60">
-              Micro-UI components, crafted individually
-            </span>
-          </motion.span>
-
           {/* H1 */}
           <motion.h1
             initial={{ opacity: 0, y: 12 }}
@@ -386,7 +349,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease, delay: 0.5 }}
-            className="mt-10 flex flex-wrap items-center justify-center gap-4"
+            className="mt-10 flex items-center justify-center"
           >
             <AnimatedPremiumButton
               href="#showcase"
@@ -399,14 +362,6 @@ export function Hero() {
                 })
               }}
             />
-            <a
-              href="https://github.com/samay-hash/openbutton"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-md border border-border/70 bg-background/40 px-5 py-2.5 text-sm font-medium text-foreground/70 backdrop-blur-sm transition hover:border-accent-foreground/40 hover:text-foreground"
-            >
-              View Source
-            </a>
           </motion.div>
 
           {/* Social proof strip */}
