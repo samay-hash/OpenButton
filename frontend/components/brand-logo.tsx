@@ -9,7 +9,7 @@ interface BrandLogoProps {
 export function BrandLogo({ href = "/" }: BrandLogoProps) {
   return (
     <Link href={href} className="font-sans text-xl font-bold tracking-tight">
-      Open<span className="text-primary">Button</span>
+      Opn<span className="text-primary">Btn</span>
     </Link>
   )
 }

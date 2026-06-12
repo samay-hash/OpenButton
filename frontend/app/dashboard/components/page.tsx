@@ -296,29 +296,33 @@ export default function ComponentsPage() {
 
               {/* Preview area */}
               <div className="relative flex h-36 items-center justify-center bg-dot-grid">
-                {comp.style === "premium-animated" ? (
-                  <AnimatedPremiumButton href="#" text={comp.name} />
-                ) : (
-                  <div className="rounded-xl border border-border/40 bg-background/60 px-5 py-2.5 text-sm font-semibold text-foreground/70">
-                    {comp.name}
-                  </div>
-                )}
-                {!comp.unlocked && (
-                  <div className="absolute right-3 top-3 flex size-7 items-center justify-center rounded-full border border-border/40 bg-background/60 text-foreground/40">
-                    <svg fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" className="size-3.5">
-                      <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
-                  </div>
-                )}
-                {comp.unlocked && (
-                  <div className="absolute right-3 top-3 flex items-center gap-1 rounded-md bg-emerald-500/10 px-2 py-0.5 text-emerald-600">
-                    <svg fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" className="size-3">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="font-mono text-[9px] font-bold uppercase">Unlocked</span>
-                  </div>
-                )}
+                {comp.hasPayment ? (
+                  <>
+                    {comp.style === "premium-animated" ? (
+                      <AnimatedPremiumButton href="#" text={comp.name} />
+                    ) : (
+                      <div className="rounded-xl border border-border/40 bg-background/60 px-5 py-2.5 text-sm font-semibold text-foreground/70">
+                        {comp.name}
+                      </div>
+                    )}
+                    {!comp.unlocked && (
+                      <div className="absolute right-3 top-3 flex size-7 items-center justify-center rounded-full border border-border/40 bg-background/60 text-foreground/40">
+                        <svg fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" className="size-3.5">
+                          <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                        </svg>
+                      </div>
+                    )}
+                    {comp.unlocked && (
+                      <div className="absolute right-3 top-3 flex items-center gap-1 rounded-md bg-emerald-500/10 px-2 py-0.5 text-emerald-600">
+                        <svg fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" className="size-3">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="font-mono text-[9px] font-bold uppercase">Unlocked</span>
+                      </div>
+                    )}
+                  </>
+                ) : null}
               </div>
 
               {/* Info */}

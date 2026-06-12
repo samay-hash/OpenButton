@@ -318,12 +318,12 @@ export function Hero() {
                   rel="noopener noreferrer"
                   className="text-primary transition-all hover:underline"
                 >
-                  samay-hash
+                  samay-hash 
                 </a>
               </div>
             </div>
           </motion.div>
-
+          
           {/* H1 */}
           <motion.h1
             initial={{ opacity: 0, y: 12 }}
