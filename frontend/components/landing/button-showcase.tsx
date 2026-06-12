@@ -4,6 +4,8 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import { ease, SHOWCASE_BUTTONS } from "@/components/landing/constants"
 import { AnimatedPremiumButton } from "@/components/landing/animated-premium-button"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 /* ─── Button style renderers — each renders a unique interactive button ─── */
 const BUTTON_RENDERERS: Record<
@@ -94,6 +96,91 @@ const CATEGORIES = [
 export function ButtonShowcase() {
   const [activeCategory, setActiveCategory] = useState("All")
   const [hoveredId, setHoveredId] = useState<string | null>(null)
+  const [isProcessing, setIsProcessing] = useState<string | null>(null)
+  const router = useRouter()
+
+  const handleBuyNow = async (componentId: string) => {
+    const token = localStorage.getItem("token")
+    if (!token) {
+      router.push("/signup")
+      return
+    }
+
+    try {
+      setIsProcessing(componentId)
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payments/create-order`, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ componentId })
+      })
+      const data = await res.json()
+      
+      if (!data.success) {
+        toast.error("Failed to initiate payment")
+        setIsProcessing(null)
+        return
+      }
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: data.amount,
+        currency: data.currency,
+        name: "OpenButton",
+        description: `Unlock ${data.component.name}`,
+        order_id: data.orderId,
+        handler: async function (response: any) {
+          const verifyRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payments/verify`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature,
+              componentId
+            })
+          })
+          const verifyData = await verifyRes.json()
+          if (verifyData.success) {
+            toast.success("Payment successful! Component unlocked.")
+            setTimeout(() => {
+              router.push("/dashboard/components")
+            }, 1000)
+          } else {
+            toast.error("Payment verification failed.")
+            setIsProcessing(null)
+          }
+        },
+        prefill: {
+          name: "Guest User",
+          email: "guest@example.com",
+          contact: "9999999999"
+        },
+        theme: {
+          color: "#000000"
+        },
+        modal: {
+          ondismiss: function() {
+            setIsProcessing(null)
+          }
+        }
+      }
+      
+      const rzp = new (window as any).Razorpay(options)
+      rzp.on("payment.failed", function (response: any) {
+        toast.error(response.error.description)
+        setIsProcessing(null)
+      })
+      rzp.open()
+      
+    } catch (err) {
+      console.error(err)
+      toast.error("Something went wrong.")
+      setIsProcessing(null)
+    }
+  }
 
   const filtered =
     activeCategory === "All"
@@ -277,26 +364,30 @@ export function ButtonShowcase() {
                     <span className="h-6 w-px bg-border/40" />
                     <button
                       type="button"
-                      disabled={!isPremium}
+                      disabled={!isPremium || isProcessing === btn.id}
+                      onClick={() => handleBuyNow(btn.id)}
                       className={`flex flex-1 items-center justify-center gap-1.5 py-2.5 font-mono text-[10px] uppercase tracking-wider transition-colors ${
-                        !isPremium
+                        !isPremium || isProcessing === btn.id
                           ? "cursor-not-allowed text-foreground/30"
                           : "text-primary hover:bg-primary/[0.08]"
                       }`}
                     >
-                      Buy Now
-                      <svg
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        className="size-3"
-                        stroke="currentColor"
-                        strokeWidth="1.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M3 8h10m0 0L9 4m4 4-4 4" />
-                      </svg>
+                      {isProcessing === btn.id ? "Processing..." : "Buy Now"}
+                      {isProcessing !== btn.id && (
+                        <svg
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          className="size-3"
+                          stroke="currentColor"
+                          strokeWidth="1.4"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M3 8h10m0 0L9 4m4 4-4 4" />
+                        </svg>
+                      )}
                     </button>
+
                   </div>
                 </div>
               </motion.div>

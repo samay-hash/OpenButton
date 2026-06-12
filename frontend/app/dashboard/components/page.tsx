@@ -1,12 +1,71 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "motion/react"
+import { useRouter } from "next/navigation"
+import { AnimatedPremiumButton } from "@/components/landing/animated-premium-button"
+
+const PREMIUM_CODE = `"use client"
+
+import React from "react"
+import Link from "next/link"
+import { Calendar } from "lucide-react"
+
+interface AnimatedPremiumButtonProps {
+  href: string
+  text: string
+  icon?: React.ReactNode
+  onClick?: (e: React.MouseEvent) => void
+}
+
+export function AnimatedPremiumButton({
+  href,
+  text,
+  icon = <Calendar className="size-4" />,
+  onClick,
+}: AnimatedPremiumButtonProps) {
+  return (
+    <div className="group relative overflow-hidden rounded-[13px] bg-border/20 p-[1.5px] shadow-sm transition-all hover:shadow-md dark:bg-border/40">
+      {/* Animated Glow Wrapper */}
+      <div
+        className="absolute inset-0 z-0 opacity-80 transition-opacity duration-700 group-hover:opacity-100"
+        style={{
+          maskImage:
+            "radial-gradient(circle at 100% 0%, black 0%, transparent 45%), radial-gradient(circle at 0% 100%, black 0%, transparent 45%)",
+          WebkitMaskImage:
+            "radial-gradient(circle at 100% 0%, black 0%, transparent 45%), radial-gradient(circle at 0% 100%, black 0%, transparent 45%)",
+        }}
+      >
+        <div className="absolute inset-[-1000%] animate-[spin_6s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#3b82f6_40%,transparent_80%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#ffffff_40%,transparent_80%)]" />
+      </div>
+
+      {/* Inner Button Background */}
+      <div className="relative z-10 rounded-[11px] bg-background/95 backdrop-blur-sm transition-colors hover:bg-background/80">
+        <Link
+          href={href}
+          onClick={onClick}
+          className="flex h-12 items-center justify-center gap-2 rounded-[11px] px-8 text-[15px] font-medium text-foreground"
+        >
+          {/* Animated Icon Sliding Effect */}
+          <div className="relative flex h-4 w-4 items-center justify-center overflow-hidden">
+            <div className="absolute transition-transform duration-500 ease-out group-hover:-translate-y-[150%]">
+              {icon}
+            </div>
+            <div className="absolute translate-y-[150%] transition-transform duration-500 ease-out group-hover:translate-y-0">
+              {icon}
+            </div>
+          </div>
+          <span>{text}</span>
+        </Link>
+      </div>
+    </div>
+  )
+}`
 
 const CATEGORIES = ["All", "Buttons", "Cards", "Navbars", "Modals", "Animations", "Forms"]
 
-const COMPONENTS = [
-  { id: "1", name: "Premium Glow", category: "Buttons", price: 35, tags: ["React", "Tailwind"], style: "premium-animated", unlocked: true },
+const INITIAL_COMPONENTS = [
+  { id: "1", name: "Premium Glow", category: "Buttons", price: 35, tags: ["React", "Tailwind"], style: "premium-animated", unlocked: false },
   { id: "2", name: "Glass Frost", category: "Buttons", price: 25, tags: ["React", "Tailwind"], style: "glass", unlocked: false },
   { id: "3", name: "Glowing Edge", category: "Buttons", price: 25, tags: ["React", "Tailwind"], style: "glowing-edge", unlocked: false },
   { id: "4", name: "Shadow Rise", category: "Buttons", price: 20, tags: ["HTML", "CSS"], style: "shadow", unlocked: false },
@@ -20,12 +79,131 @@ const COMPONENTS = [
   { id: "12", name: "Form Glow", category: "Forms", price: 35, tags: ["React", "Tailwind"], style: "glass", unlocked: false },
 ]
 
+import { toast } from "sonner"
+
 export default function ComponentsPage() {
   const [activeCategory, setActiveCategory] = useState("All")
+  const [viewSource, setViewSource] = useState<string | null>(null)
+  const [componentsList, setComponentsList] = useState(INITIAL_COMPONENTS)
+  const [isProcessing, setIsProcessing] = useState<string | null>(null)
+  const router = useRouter()
+
+  useEffect(() => {
+    const fetchComponents = async () => {
+      try {
+        const token = localStorage.getItem("token")
+        if (!token) {
+          router.push("/login")
+          return
+        }
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/components`, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        })
+        const data = await res.json()
+        if (data && data.data) {
+          // Merge db components state with frontend INITIAL_COMPONENTS
+          const fetchedComponents = data.data
+          const merged = INITIAL_COMPONENTS.map(c => {
+            const fetched = fetchedComponents.find((fc: any) => fc.id === c.id)
+            return fetched ? { ...c, unlocked: fetched.unlocked } : c
+          })
+          setComponentsList(merged)
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    fetchComponents()
+  }, [router])
+
+  const handleUnlock = async (comp: typeof INITIAL_COMPONENTS[0]) => {
+    if (comp.unlocked) {
+      setViewSource(comp.id)
+      return
+    }
+
+    try {
+      setIsProcessing(comp.id)
+      const token = localStorage.getItem("token")
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payments/create-order`, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ componentId: comp.id })
+      })
+      const data = await res.json()
+      
+      if (!data.success) {
+        toast.error("Failed to initiate payment")
+        setIsProcessing(null)
+        return
+      }
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: data.amount,
+        currency: data.currency,
+        name: "OpenButton",
+        description: `Unlock ${data.component.name}`,
+        order_id: data.orderId,
+        handler: async function (response: any) {
+          const verifyRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payments/verify`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature,
+              componentId: comp.id
+            })
+          })
+          const verifyData = await verifyRes.json()
+          if (verifyData.success) {
+            toast.success("Payment successful! Component unlocked.")
+            setComponentsList(prev => prev.map(c => c.id === comp.id ? { ...c, unlocked: true } : c))
+            setViewSource(comp.id)
+            setIsProcessing(null)
+          } else {
+            toast.error("Payment verification failed.")
+            setIsProcessing(null)
+          }
+        },
+        prefill: {
+          name: "Samay Samrat",
+          email: "samay@example.com",
+          contact: "9999999999"
+        },
+        theme: {
+          color: "#3b82f6"
+        },
+        modal: {
+          ondismiss: function() {
+            setIsProcessing(null)
+          }
+        }
+      }
+      
+      const rzp = new (window as any).Razorpay(options)
+      rzp.on("payment.failed", function (response: any) {
+        toast.error(response.error.description)
+        setIsProcessing(null)
+      })
+      rzp.open()
+      
+    } catch (err) {
+      toast.error("Something went wrong.")
+      setIsProcessing(null)
+    }
+  }
 
   const filtered = activeCategory === "All"
-    ? COMPONENTS
-    : COMPONENTS.filter((c) => c.category === activeCategory)
+    ? componentsList
+    : componentsList.filter((c) => c.category === activeCategory)
 
   return (
     <div className="mx-auto max-w-6xl">
@@ -88,10 +266,14 @@ export default function ComponentsPage() {
               className="group overflow-hidden rounded-2xl border border-border/50 bg-background/40 backdrop-blur-sm transition-all hover:border-border/80"
             >
               {/* Preview area */}
-              <div className={`relative flex h-36 items-center justify-center bg-dot-grid ${!comp.unlocked ? "opacity-40 grayscale" : ""}`}>
-                <div className="rounded-xl border border-border/40 bg-background/60 px-5 py-2.5 text-sm font-semibold text-foreground/70">
-                  {comp.name}
-                </div>
+              <div className="relative flex h-36 items-center justify-center bg-dot-grid">
+                {comp.style === "premium-animated" ? (
+                  <AnimatedPremiumButton href="#" text={comp.name} />
+                ) : (
+                  <div className="rounded-xl border border-border/40 bg-background/60 px-5 py-2.5 text-sm font-semibold text-foreground/70">
+                    {comp.name}
+                  </div>
+                )}
                 {!comp.unlocked && (
                   <div className="absolute right-3 top-3 flex size-7 items-center justify-center rounded-full border border-border/40 bg-background/60 text-foreground/40">
                     <svg fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" className="size-3.5">
@@ -127,20 +309,77 @@ export default function ComponentsPage() {
                 </div>
                 <button
                   type="button"
-                  disabled={!comp.unlocked}
+                  disabled={isProcessing === comp.id}
+                  onClick={() => handleUnlock(comp)}
                   className={`mt-4 w-full rounded-xl py-2 font-mono text-[11px] font-semibold uppercase tracking-wider transition-all ${
                     comp.unlocked
                       ? "bg-primary text-primary-foreground hover:opacity-90"
-                      : "cursor-not-allowed bg-foreground/[0.06] text-foreground/30"
+                      : "bg-foreground/[0.06] text-foreground hover:bg-foreground/10"
                   }`}
                 >
-                  {comp.unlocked ? "View Source" : "Unlock Component"}
+                  {isProcessing === comp.id ? "Processing..." : comp.unlocked ? "View Source" : "Unlock Component"}
                 </button>
               </div>
             </motion.div>
           ))}
         </AnimatePresence>
       </div>
+
+      {/* Source Code Modal */}
+      <AnimatePresence>
+        {viewSource && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 p-4 backdrop-blur-sm"
+            onClick={() => setViewSource(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-3xl overflow-hidden rounded-2xl border border-border/60 bg-background shadow-2xl"
+            >
+              <div className="flex items-center justify-between border-b border-border/40 bg-muted/30 px-6 py-4">
+                <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground">
+                  Premium Glow - React / Tailwind
+                </h3>
+                <button
+                  type="button"
+                  onClick={() => setViewSource(null)}
+                  className="rounded-full bg-foreground/5 p-1.5 text-foreground/50 transition-colors hover:bg-foreground/10 hover:text-foreground"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-4">
+                    <path d="M18 6 6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="max-h-[60vh] overflow-y-auto p-6">
+                <pre className="rounded-xl bg-[#0d1117] p-5 text-sm">
+                  <code className="font-mono text-[13px] leading-relaxed text-[#c9d1d9] whitespace-pre-wrap">
+                    {PREMIUM_CODE}
+                  </code>
+                </pre>
+              </div>
+              <div className="border-t border-border/40 bg-muted/30 px-6 py-4 flex justify-between items-center">
+                <p className="text-xs text-foreground/50">Install lucide-react and motion/react</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText(PREMIUM_CODE)
+                    alert("Copied to clipboard!")
+                  }}
+                  className="rounded-lg bg-primary px-4 py-2 font-mono text-[11px] font-semibold text-primary-foreground transition-all hover:opacity-90"
+                >
+                  Copy Code
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

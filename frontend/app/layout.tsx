@@ -24,6 +24,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 
 import { cn } from "@/lib/utils"
 import type { Metadata } from "next"
+import Script from "next/script"
 
 const siteUrl = new URL("https://openbutton.ui")
 const opengraphImageUrl = new URL("/opengraph.png", siteUrl)
@@ -181,6 +182,7 @@ export default function RootLayout({
             </TooltipProvider>
           </ThemeProvider>
         </div>
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       </body>
     </html>
   )

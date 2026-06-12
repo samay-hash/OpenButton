@@ -1,18 +1,31 @@
 import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+import User from '../models/User';
 
-// Mock auth middleware — passes through with a mock user
-// Replace this with real JWT verification later
-export function authMiddleware(req: Request, res: Response, next: NextFunction) {
-  const authHeader = req.headers.authorization;
+export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+  let token;
 
-  // For now, always pass through with mock user
-  // In production: verify JWT token from authHeader
-  (req as any).user = {
-    id: 'user_001',
-    email: 'premium@openbutton.com',
-    name: 'Premium User',
-    plan: 'pro',
-  };
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    try {
+      token = req.headers.authorization.split(' ')[1];
 
-  next();
-}
+      const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as any;
+
+      const user = await User.findById(decoded.id).select('-password');
+      if (!user) {
+        res.status(401).json({ success: false, error: 'Not authorized, user not found' });
+        return;
+      }
+
+      (req as any).user = user;
+      next();
+    } catch (error) {
+      console.error(error);
+      res.status(401).json({ success: false, error: 'Not authorized, token failed' });
+      return;
+    }
+  } else {
+    res.status(401).json({ success: false, error: 'Not authorized, no token' });
+    return;
+  }
+};
