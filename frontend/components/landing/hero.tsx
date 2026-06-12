@@ -296,12 +296,44 @@ export function Hero() {
         className="mx-auto flex w-full flex-col items-center gap-8 text-center"
       >
         <div className="flex max-w-5xl flex-col items-center text-center">
+          {/* Founder Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease }}
+            className="mb-8"
+          >
+            <div className="group relative overflow-hidden rounded-[10px] bg-primary/10 p-[1px] transition-all hover:shadow-sm">
+              {/* Animated Glow Wrapper (Border light) */}
+              <div className="absolute inset-0 z-0 opacity-100">
+                <div className="absolute inset-[-100%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,var(--primary)_15%,transparent_30%)]" />
+              </div>
+
+              {/* Inner Content Background */}
+              <div className="relative z-10 flex items-center gap-2 rounded-[9px] bg-background/95 px-4 py-1.5 text-[11px] font-medium text-foreground/60 backdrop-blur-sm transition-colors group-hover:bg-background/80">
+                <span className="relative flex size-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex size-2 rounded-full bg-primary"></span>
+                </span>
+                founder ~{" "}
+                <a
+                  href="https://github.com/samay-hash"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary transition-all hover:underline"
+                >
+                  samay-hash
+                </a>
+              </div>
+            </div>
+          </motion.div>
+
           {/* H1 */}
           <motion.h1
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease, delay: 0.1 }}
-            className="mt-12 sm:mt-16 lg:mt-20 text-[2rem] leading-[1.06] font-medium tracking-[-0.03em] text-balance sm:text-5xl lg:text-[4.2rem]"
+            className="text-[2rem] leading-[1.06] font-medium tracking-[-0.03em] text-balance sm:text-5xl lg:text-[4.2rem]"
           >
             Click Worthy components,
             <br />
