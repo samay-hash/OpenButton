@@ -41,4 +41,5 @@ pnpm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-pack
+frontend/.next
+frontend/node_modules
