@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///Users/samaysamrat/openbutton/openbutton-main/frontend/instrumentation-client.ts"],"sourcesContent":["const dsn = process.env.NEXT_PUBLIC_SENTRY_DSN\n\nif (dsn) {\n  void import(\"@sentry/browser\").then((Sentry) => {\n    Sentry.init({ dsn })\n  })\n}\n\nexport function onRouterTransitionStart() {}\n"],"names":[],"mappings":";;;;AAAY;AAAZ,MAAM,MAAM,yZAAO,CAAC,GAAG,CAAC,sBAAsB;AAE9C,IAAI,KAAK;IACP,KAAK,sMAA0B,IAAI,CAAC,CAAC;QACnC,OAAO,IAAI,CAAC;YAAE;QAAI;IACpB;AACF;AAEO,SAAS,2BAA2B","debugId":null}}]
-}
