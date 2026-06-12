@@ -41,244 +41,40 @@ function AnimatedCounter({
   )
 }
 
-/* ─── Custom Corner-Lit Buttons (Matches "Browse Buttons" aesthetic) ─── */
-const GlassyButton = ({
-  label,
-  icon: Icon,
-  colorName,
-}: {
-  label: string
-  icon: React.ElementType
-  colorName: string
-}) => {
-  const gradientMap: Record<string, string> = {
-    blue: "from-blue-500/20 via-transparent to-transparent dark:from-blue-500/30",
-    purple:
-      "from-purple-500/20 via-transparent to-transparent dark:from-purple-500/30",
-    emerald:
-      "from-emerald-500/20 via-transparent to-transparent dark:from-emerald-500/30",
-    rose: "from-rose-500/20 via-transparent to-transparent dark:from-rose-500/30",
-    amber:
-      "from-amber-500/20 via-transparent to-transparent dark:from-amber-500/30",
-    silver:
-      "from-neutral-500/15 via-transparent to-transparent dark:from-white/20",
-  }
-
-  const textMap: Record<string, string> = {
-    blue: "text-blue-700 dark:text-blue-300",
-    purple: "text-purple-700 dark:text-purple-300",
-    emerald: "text-emerald-700 dark:text-emerald-300",
-    rose: "text-rose-700 dark:text-rose-300",
-    amber: "text-amber-700 dark:text-amber-300",
-    silver: "text-foreground dark:text-white",
-  }
-
-  const borderHighlightMap: Record<string, string> = {
-    blue: "shadow-[inset_2px_-2px_8px_-2px_rgba(59,130,246,0.3)] dark:shadow-[inset_2px_-2px_8px_-2px_rgba(59,130,246,0.6)]",
-    purple:
-      "shadow-[inset_2px_-2px_8px_-2px_rgba(168,85,247,0.3)] dark:shadow-[inset_2px_-2px_8px_-2px_rgba(168,85,247,0.6)]",
-    emerald:
-      "shadow-[inset_2px_-2px_8px_-2px_rgba(16,185,129,0.3)] dark:shadow-[inset_2px_-2px_8px_-2px_rgba(16,185,129,0.6)]",
-    rose: "shadow-[inset_2px_-2px_8px_-2px_rgba(244,63,94,0.3)] dark:shadow-[inset_2px_-2px_8px_-2px_rgba(244,63,94,0.6)]",
-    amber:
-      "shadow-[inset_2px_-2px_8px_-2px_rgba(245,158,11,0.3)] dark:shadow-[inset_2px_-2px_8px_-2px_rgba(245,158,11,0.6)]",
-    silver:
-      "shadow-[inset_2px_-2px_8px_-2px_rgba(115,115,115,0.2)] dark:shadow-[inset_2px_-2px_8px_-2px_rgba(255,255,255,0.4)]",
-  }
-
-  return (
-    <button
-      className={`group relative flex h-11 w-full items-center justify-center gap-2 overflow-hidden rounded-2xl border border-border/40 bg-background transition-all duration-300 hover:scale-[1.02] hover:shadow-sm active:scale-95 ${textMap[colorName]}`}
-    >
-      {/* Corner light gradient */}
-      <div
-        className={`absolute inset-0 bg-gradient-to-tr opacity-80 transition-opacity duration-300 group-hover:opacity-100 ${gradientMap[colorName]}`}
-      />
-
-      {/* Left and Bottom Inner Border Glow */}
-      <div
-        className={`absolute inset-0 rounded-2xl opacity-60 transition-opacity duration-300 group-hover:opacity-100 ${borderHighlightMap[colorName]}`}
-      />
-
-      {Icon && <Icon className="relative z-10 size-4" />}
-      <span className="relative z-10 font-semibold">{label}</span>
-    </button>
-  )
-}
-
-/* ─── Hero mini-button showcase — live interactive buttons ─── */
-const HERO_BUTTONS_DATA = [
-  {
-    label: "Get Started",
-    component: () => (
-      <GlassyButton
-        label="Get Started"
-        icon={RiArrowRightLine}
-        colorName="blue"
-      />
-    ),
-    className: "",
-  },
-  {
-    label: "Subscribe",
-    component: () => (
-      <GlassyButton label="Subscribe" icon={RiMagicLine} colorName="purple" />
-    ),
-    className: "",
-  },
-  {
-    label: "Book Call",
-    component: () => (
-      <GlassyButton
-        label="Book Call"
-        icon={RiCalendarLine}
-        colorName="emerald"
-      />
-    ),
-    className: "",
-  },
-  {
-    label: "Download",
-    component: () => (
-      <GlassyButton
-        label="Download"
-        icon={RiDownloadCloud2Line}
-        colorName="rose"
-      />
-    ),
-    className: "",
-  },
-  {
-    label: "Deploy Now",
-    component: () => (
-      <GlassyButton label="Deploy Now" icon={RiRocketLine} colorName="silver" />
-    ),
-    className: "",
-  },
-  {
-    label: "View Source",
-    component: () => (
-      <GlassyButton label="View Source" icon={RiGithubFill} colorName="amber" />
-    ),
-    className: "",
-  },
-]
-
-function HeroButtonGrid() {
+/* ─── Hero Image Preview ─── */
+function HeroImagePreview() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20, scale: 0.96 }}
+      initial={{ opacity: 0, y: 20, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.8, ease, delay: 0.5 }}
-      className="relative mx-auto mt-10 w-full max-w-3xl"
+      className="relative mx-auto mt-12 w-full max-w-5xl"
     >
-      {/* Ambient glow behind the grid */}
+      {/* Ambient glow behind the image */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-40 blur-3xl"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-40 blur-[80px]"
         style={{
           background:
-            "radial-gradient(ellipse at 30% 40%, var(--primary), transparent 60%), radial-gradient(ellipse at 70% 60%, oklch(0.65 0.2 275 / 50%), transparent 60%)",
+            "radial-gradient(ellipse at 50% 50%, var(--primary), transparent 70%)",
         }}
       />
 
-      <div className="relative rounded-[20px] border border-border/70 bg-background/40 p-2 backdrop-blur-md">
-        {/* Corner ticks */}
-        <svg
-          viewBox="0 0 16 16"
-          fill="none"
-          className="absolute -top-1.5 -left-1.5 size-3 text-primary/70"
-          aria-hidden
-        >
-          <path
-            d="M1 1h6M1 1v6"
-            stroke="currentColor"
-            strokeWidth="1.2"
-            strokeLinecap="square"
+      <div className="relative overflow-hidden rounded-[24px] border border-border/40 bg-background/40 shadow-2xl backdrop-blur-sm">
+        {/* Top bar for macOS look */}
+        <div className="flex items-center gap-1.5 border-b border-border/40 bg-background/60 px-4 py-3 backdrop-blur-md">
+          <span className="size-2.5 rounded-full bg-[#ff5f57]" />
+          <span className="size-2.5 rounded-full bg-[#febc2e]" />
+          <span className="size-2.5 rounded-full bg-[#28c840]" />
+        </div>
+        
+        {/* Image wrapper */}
+        <div className="bg-dot-grid w-full">
+          <img
+            src="/wall.png"
+            alt="OpenButton Preview"
+            className="w-full h-auto object-cover"
           />
-        </svg>
-        <svg
-          viewBox="0 0 16 16"
-          fill="none"
-          className="absolute -top-1.5 -right-1.5 size-3 rotate-90 text-accent-foreground/70"
-          aria-hidden
-        >
-          <path
-            d="M1 1h6M1 1v6"
-            stroke="currentColor"
-            strokeWidth="1.2"
-            strokeLinecap="square"
-          />
-        </svg>
-        <svg
-          viewBox="0 0 16 16"
-          fill="none"
-          className="absolute -bottom-1.5 -left-1.5 size-3 -rotate-90 text-accent-foreground/70"
-          aria-hidden
-        >
-          <path
-            d="M1 1h6M1 1v6"
-            stroke="currentColor"
-            strokeWidth="1.2"
-            strokeLinecap="square"
-          />
-        </svg>
-        <svg
-          viewBox="0 0 16 16"
-          fill="none"
-          className="absolute -right-1.5 -bottom-1.5 size-3 rotate-180 text-primary/70"
-          aria-hidden
-        >
-          <path
-            d="M1 1h6M1 1v6"
-            stroke="currentColor"
-            strokeWidth="1.2"
-            strokeLinecap="square"
-          />
-        </svg>
-
-        <div className="overflow-hidden rounded-[14px] border border-border/60 bg-gradient-to-b from-background/80 to-background/40">
-          {/* Title bar */}
-          <div className="flex items-center justify-between border-b border-border/50 bg-background/40 px-4 py-2.5">
-            <div className="flex items-center gap-1.5">
-              <span className="size-2.5 rounded-full bg-primary/55" />
-              <span className="size-2.5 rounded-full bg-accent-foreground/55" />
-              <span className="size-2.5 rounded-full bg-foreground/15" />
-            </div>
-            <span className="font-mono text-[10px] tracking-widest text-foreground/40 uppercase">
-              preview
-            </span>
-            <span className="font-mono text-[10px] text-foreground/30">
-              ⌘ K
-            </span>
-          </div>
-
-          {/* Button grid area */}
-          <div className="bg-dot-grid relative p-6 sm:p-8">
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
-              {HERO_BUTTONS_DATA.map((btn, i) => (
-                <motion.div
-                  key={btn.label}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    duration: 0.4,
-                    ease,
-                    delay: 0.7 + i * 0.08,
-                  }}
-                  className="relative flex items-center justify-center rounded-2xl border border-border/40 bg-background/60 p-4 transition-all duration-200 hover:border-primary/30 hover:bg-background/80"
-                >
-                  {btn.component ? (
-                    <btn.component />
-                  ) : (
-                    <button type="button" className={btn.className}>
-                      {btn.label}
-                    </button>
-                  )}
-                </motion.div>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </motion.div>
@@ -420,9 +216,9 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Hero button showcase grid */}
-        <div className="w-full max-w-6xl">
-          <HeroButtonGrid />
+        {/* Hero image showcase */}
+        <div className="w-full">
+          <HeroImagePreview />
         </div>
       </motion.div>
     </section>
