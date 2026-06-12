@@ -201,16 +201,16 @@ export function ButtonShowcase() {
 
                   {/* Sign In Overlay for Non-Premium Buttons */}
                   {!isPremium && (
-                    <div className="absolute inset-x-0 top-0 z-20 flex h-[10rem] items-center justify-center bg-background/5 backdrop-blur-[2px]">
-                      <div className="flex items-center gap-2 rounded-full border border-border/60 bg-background/95 px-4 py-2 font-mono text-[11px] font-semibold tracking-wide text-foreground shadow-xl">
+                    <div className="absolute inset-x-0 top-0 z-20 flex h-[10rem] items-center justify-center bg-background/30 backdrop-blur-md">
+                      <div className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/[0.07] px-5 py-2.5 font-mono text-[11px] font-bold tracking-wider text-foreground shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_24px_-8px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all duration-300 hover:scale-[1.03] hover:border-white/30 hover:bg-white/[0.14] uppercase">
                         <svg
                           fill="none"
                           stroke="currentColor"
-                          strokeWidth="2"
+                          strokeWidth="2.5"
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           viewBox="0 0 24 24"
-                          className="size-3.5"
+                          className="size-4"
                         >
                           <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
                           <path d="M7 11V7a5 5 0 0 1 10 0v4" />

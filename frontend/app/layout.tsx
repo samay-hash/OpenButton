@@ -173,7 +173,7 @@ export default function RootLayout({
     >
       <body>
         <div className="mx-auto max-w-[1800px]">
-          <ThemeProvider defaultTheme="dark">
+          <ThemeProvider defaultTheme="light" enableSystem={false}>
             <TooltipProvider delayDuration={150}>
               {children}
 

@@ -1,0 +1,33 @@
+{
+  "pages": {
+    "/page": [
+      "static/chunks/8d943_next_dist_6f004a6e._.js",
+      "static/chunks/openbutton_openbutton-main_frontend_app_favicon_ico_mjs_1ab78f64._.js",
+      "static/chunks/[root-of-the-server]__c9a56046._.css",
+      "static/chunks/dd156_@remixicon_react_index_mjs_7d19e656._.js",
+      "static/chunks/524fa_tailwind-merge_dist_bundle-mjs_mjs_aec54723._.js",
+      "static/chunks/a909f__pnpm_7e5f0e88._.js",
+      "static/chunks/openbutton_openbutton-main_frontend_6b904224._.js",
+      "static/chunks/openbutton_openbutton-main_frontend_app_layout_tsx_895ed9a2._.js",
+      "static/chunks/14015_@sentry_browser_build_npm_esm_index_92d0b8ee.js",
+      "static/chunks/[root-of-the-server]__a80bf0df._.js",
+      "static/chunks/[next]_internal_font_google_4efff0ee._.css",
+      "static/chunks/openbutton_openbutton-main_frontend_app_global-error_tsx_eec7119c._.js",
+      "static/chunks/openbutton_openbutton-main_frontend_571cd271._.js",
+      "static/chunks/3bf59_motion-dom_dist_es_380fe5c4._.js",
+      "static/chunks/22eae_framer-motion_dist_es_0b2ee1e5._.js",
+      "static/chunks/a909f__pnpm_67b38187._.js",
+      "static/chunks/openbutton_openbutton-main_frontend_app_page_tsx_eec7119c._.js",
+      "static/chunks/[root-of-the-server]__13af6833._.js",
+      "static/chunks/8d943_next_dist_compiled_react-dom_86170657._.js",
+      "static/chunks/8d943_next_dist_compiled_next-devtools_index_f064f237.js",
+      "static/chunks/8d943_next_dist_compiled_106953bb._.js",
+      "static/chunks/8d943_next_dist_client_89825d8f._.js",
+      "static/chunks/8d943_next_dist_dd2e88a4._.js",
+      "static/chunks/44852_@swc_helpers_cjs_9e9c1e92._.js",
+      "static/chunks/openbutton_openbutton-main_frontend_instrumentation-client_ts_0e4ecab3._.js",
+      "static/chunks/openbutton_openbutton-main_frontend_a0ff3932._.js",
+      "static/chunks/turbopack-openbutton_openbutton-main_frontend_19ebe5e2._.js"
+    ]
+  }
+}

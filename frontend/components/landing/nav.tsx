@@ -44,7 +44,7 @@ export function Nav() {
         <BrandLogo />
 
         {/* Desktop links */}
-        <div className="hidden items-center gap-1 font-mono text-xs text-foreground/60 xl:flex">
+        <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 font-mono text-xs text-foreground/60 xl:flex">
           {links.map((link) => (
             <a
               key={link.href}
