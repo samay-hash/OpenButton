@@ -311,10 +311,6 @@ export function Hero() {
 
               {/* Inner Content Background */}
               <div className="relative z-10 flex items-center gap-2 rounded-[9px] bg-background/95 px-4 py-1.5 text-[11px] font-medium text-foreground/60 backdrop-blur-sm transition-colors group-hover:bg-background/80">
-                <span className="relative flex size-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
-                  <span className="relative inline-flex size-2 rounded-full bg-primary"></span>
-                </span>
                 founder ~{" "}
                 <a
                   href="https://github.com/samay-hash"
