@@ -43,3 +43,5 @@ pnpm-debug.log*
 next-env.d.ts
 frontend/.next
 frontend/node_modules
+backend/node_modules
+backend/dist
