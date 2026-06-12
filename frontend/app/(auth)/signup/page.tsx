@@ -22,7 +22,7 @@ export default function SignupPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password })
       })
-      const data = await res.json()
+      const data = (await res.json()) as any
 
       if (data.success) {
         localStorage.setItem("token", data.token)
