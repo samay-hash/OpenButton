@@ -48,33 +48,41 @@ function HeroImagePreview() {
       initial={{ opacity: 0, y: 20, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.8, ease, delay: 0.5 }}
-      className="relative mx-auto mt-12 w-full max-w-5xl"
+      className="relative mx-auto mt-6 w-full max-w-5xl px-4 sm:px-6"
     >
       {/* Ambient glow behind the image */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-40 blur-[80px]"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-30 blur-[100px]"
         style={{
           background:
-            "radial-gradient(ellipse at 50% 50%, var(--primary), transparent 70%)",
+            "radial-gradient(ellipse at 50% 50%, var(--primary), transparent 60%)",
         }}
       />
 
-      <div className="relative overflow-hidden rounded-[24px] border border-border/40 bg-background/40 shadow-2xl backdrop-blur-sm">
-        {/* Top bar for macOS look */}
-        <div className="flex items-center gap-1.5 border-b border-border/40 bg-background/60 px-4 py-3 backdrop-blur-md">
-          <span className="size-2.5 rounded-full bg-[#ff5f57]" />
-          <span className="size-2.5 rounded-full bg-[#febc2e]" />
-          <span className="size-2.5 rounded-full bg-[#28c840]" />
-        </div>
-        
-        {/* Image wrapper */}
-        <div className="bg-dot-grid w-full">
-          <img
-            src="/wall.png"
-            alt="OpenButton Preview"
-            className="w-full h-auto object-cover"
-          />
+      {/* Premium nested glass wrapper */}
+      <div className="relative rounded-[24px] border border-border/60 bg-background/30 p-2 shadow-2xl backdrop-blur-md sm:p-3">
+        {/* Inner container with macOS title bar and image */}
+        <div className="overflow-hidden rounded-[16px] border border-border/50 bg-background/80 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
+          {/* Top bar for macOS look */}
+          <div className="flex items-center justify-between border-b border-border/40 bg-gradient-to-b from-white/5 to-transparent px-4 py-2.5 dark:from-white/5">
+            <div className="flex items-center gap-1.5">
+              <span className="size-2.5 rounded-full bg-[#ff5f57] ring-1 ring-black/10" />
+              <span className="size-2.5 rounded-full bg-[#febc2e] ring-1 ring-black/10" />
+              <span className="size-2.5 rounded-full bg-[#28c840] ring-1 ring-black/10" />
+            </div>
+          </div>
+          
+          {/* Image wrapper */}
+          <div className="bg-dot-grid relative w-full">
+            <img
+              src="/wall.png"
+              alt="OpenButton Preview"
+              className="w-full h-auto object-cover object-top opacity-95 transition-opacity duration-700 hover:opacity-100"
+            />
+            {/* Subtle inner shadow over image to blend it nicely */}
+            <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_20px_rgba(0,0,0,0.1)] dark:shadow-[inset_0_0_20px_rgba(0,0,0,0.4)]" />
+          </div>
         </div>
       </div>
     </motion.div>
