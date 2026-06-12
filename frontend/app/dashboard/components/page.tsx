@@ -9,6 +9,9 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import { useRouter } from "next/navigation"
 import { AnimatedPremiumButton } from "@/components/landing/animated-premium-button"
+import { toast } from "sonner"
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism"
 
 const PREMIUM_CODE = `"use client"
 
@@ -70,27 +73,26 @@ export function AnimatedPremiumButton({
 const CATEGORIES = ["All", "Buttons", "Cards", "Navbars", "Modals", "Animations", "Forms"]
 
 const INITIAL_COMPONENTS = [
-  { id: "1", name: "Premium Glow", category: "Buttons", price: 35, tags: ["React", "Tailwind"], style: "premium-animated", unlocked: false },
-  { id: "2", name: "Glass Frost", category: "Buttons", price: 25, tags: ["React", "Tailwind"], style: "glass", unlocked: false },
-  { id: "3", name: "Glowing Edge", category: "Buttons", price: 25, tags: ["React", "Tailwind"], style: "glowing-edge", unlocked: false },
-  { id: "4", name: "Shadow Rise", category: "Buttons", price: 20, tags: ["HTML", "CSS"], style: "shadow", unlocked: false },
-  { id: "5", name: "Border Trace", category: "Buttons", price: 30, tags: ["React", "CSS"], style: "border-trace", unlocked: false },
-  { id: "6", name: "Shimmer Fill", category: "Buttons", price: 25, tags: ["React", "Tailwind"], style: "shimmer", unlocked: false },
-  { id: "7", name: "Neon Card", category: "Cards", price: 40, tags: ["React", "CSS"], style: "glass", unlocked: false },
-  { id: "8", name: "Glassmorphism Card", category: "Cards", price: 35, tags: ["React", "Tailwind"], style: "glass", unlocked: false },
-  { id: "9", name: "Floating Navbar", category: "Navbars", price: 45, tags: ["React", "Tailwind"], style: "glass", unlocked: false },
-  { id: "10", name: "Modal Blur", category: "Modals", price: 30, tags: ["React", "CSS"], style: "glass", unlocked: false },
-  { id: "11", name: "Spring Bounce", category: "Animations", price: 20, tags: ["React", "Motion"], style: "bounce", unlocked: false },
-  { id: "12", name: "Form Glow", category: "Forms", price: 35, tags: ["React", "Tailwind"], style: "glass", unlocked: false },
+  { id: "1", name: "Premium Glow", category: "Buttons", price: 35, tags: ["React", "Tailwind"], style: "premium-animated", unlocked: false, hasPayment: true },
+  { id: "2", name: "Glass Frost", category: "Buttons", price: 25, tags: ["React", "Tailwind"], style: "glass", unlocked: false, hasPayment: false },
+  { id: "3", name: "Glowing Edge", category: "Buttons", price: 25, tags: ["React", "Tailwind"], style: "glowing-edge", unlocked: false, hasPayment: false },
+  { id: "4", name: "Shadow Rise", category: "Buttons", price: 20, tags: ["HTML", "CSS"], style: "shadow", unlocked: false, hasPayment: false },
+  { id: "5", name: "Border Trace", category: "Buttons", price: 30, tags: ["React", "CSS"], style: "border-trace", unlocked: false, hasPayment: false },
+  { id: "6", name: "Shimmer Fill", category: "Buttons", price: 25, tags: ["React", "Tailwind"], style: "shimmer", unlocked: false, hasPayment: false },
+  { id: "7", name: "Neon Card", category: "Cards", price: 40, tags: ["React", "CSS"], style: "glass", unlocked: false, hasPayment: false },
+  { id: "8", name: "Glassmorphism Card", category: "Cards", price: 35, tags: ["React", "Tailwind"], style: "glass", unlocked: false, hasPayment: false },
+  { id: "9", name: "Floating Navbar", category: "Navbars", price: 45, tags: ["React", "Tailwind"], style: "glass", unlocked: false, hasPayment: false },
+  { id: "10", name: "Modal Blur", category: "Modals", price: 30, tags: ["React", "CSS"], style: "glass", unlocked: false, hasPayment: false },
+  { id: "11", name: "Spring Bounce", category: "Animations", price: 20, tags: ["React", "Motion"], style: "bounce", unlocked: false, hasPayment: false },
+  { id: "12", name: "Form Glow", category: "Forms", price: 35, tags: ["React", "Tailwind"], style: "glass", unlocked: false, hasPayment: false },
 ]
-
-import { toast } from "sonner"
 
 export default function ComponentsPage() {
   const [activeCategory, setActiveCategory] = useState("All")
   const [viewSource, setViewSource] = useState<string | null>(null)
   const [componentsList, setComponentsList] = useState(INITIAL_COMPONENTS)
   const [isProcessing, setIsProcessing] = useState<string | null>(null)
+  const [copied, setCopied] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -109,7 +111,6 @@ export default function ComponentsPage() {
         })
         const data = (await res.json()) as any
         if (data && data.data) {
-          // Merge db components state with frontend INITIAL_COMPONENTS
           const fetchedComponents = data.data
           const merged = INITIAL_COMPONENTS.map(c => {
             const fetched = fetchedComponents.find((fc: any) => fc.id === c.id)
@@ -121,7 +122,7 @@ export default function ComponentsPage() {
         console.error(err)
       }
     }
-    fetchComponents()
+    void fetchComponents()
   }, [router])
 
   const handleUnlock = async (comp: typeof INITIAL_COMPONENTS[0]) => {
@@ -206,6 +207,13 @@ export default function ComponentsPage() {
     }
   }
 
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(PREMIUM_CODE)
+    setCopied(true)
+    toast.success("Code copied to clipboard!")
+    setTimeout(() => setCopied(false), 2000)
+  }
+
   const filtered = activeCategory === "All"
     ? componentsList
     : componentsList.filter((c) => c.category === activeCategory)
@@ -268,8 +276,24 @@ export default function ComponentsPage() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.35, delay: i * 0.03 }}
-              className="group overflow-hidden rounded-2xl border border-border/50 bg-background/40 backdrop-blur-sm transition-all hover:border-border/80"
+              className="group relative overflow-hidden rounded-2xl border border-border/50 bg-background/40 backdrop-blur-sm transition-all hover:border-border/80"
             >
+              {/* Coming Soon overlay for components without payment */}
+              {!comp.hasPayment && (
+                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 rounded-2xl bg-background/85 backdrop-blur-[2px]">
+                  <div className="flex size-10 items-center justify-center rounded-full border border-border/60 bg-background/80 text-foreground/40">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="size-5">
+                      <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+                      <path d="M12 6v6l4 2" />
+                    </svg>
+                  </div>
+                  <div className="text-center">
+                    <p className="font-mono text-[11px] font-bold uppercase tracking-widest text-foreground/60">Coming Soon</p>
+                    <p className="mt-0.5 font-mono text-[9px] text-foreground/35">In Development</p>
+                  </div>
+                </div>
+              )}
+
               {/* Preview area */}
               <div className="relative flex h-36 items-center justify-center bg-dot-grid">
                 {comp.style === "premium-animated" ? (
@@ -312,73 +336,174 @@ export default function ComponentsPage() {
                     <span key={tag} className="rounded bg-secondary/80 px-1.5 py-0.5 font-mono text-[9px] text-foreground/50">{tag}</span>
                   ))}
                 </div>
-                <button
-                  type="button"
-                  disabled={isProcessing === comp.id}
-                  onClick={() => handleUnlock(comp)}
-                  className={`mt-4 w-full rounded-xl py-2 font-mono text-[11px] font-semibold uppercase tracking-wider transition-all ${
-                    comp.unlocked
-                      ? "bg-primary text-primary-foreground hover:opacity-90"
-                      : "bg-foreground/[0.06] text-foreground hover:bg-foreground/10"
-                  }`}
-                >
-                  {isProcessing === comp.id ? "Processing..." : comp.unlocked ? "View Source" : "Unlock Component"}
-                </button>
+                {comp.hasPayment ? (
+                  <button
+                    type="button"
+                    disabled={isProcessing === comp.id}
+                    onClick={() => void handleUnlock(comp)}
+                    className={`mt-4 w-full rounded-xl py-2 font-mono text-[11px] font-semibold uppercase tracking-wider transition-all ${
+                      comp.unlocked
+                        ? "bg-primary text-primary-foreground hover:opacity-90"
+                        : "bg-foreground/[0.06] text-foreground hover:bg-foreground/10"
+                    }`}
+                  >
+                    {isProcessing === comp.id ? "Processing..." : comp.unlocked ? "View Source" : "Unlock Component"}
+                  </button>
+                ) : (
+                  <div className="mt-4 w-full rounded-xl border border-dashed border-border/50 py-2 text-center font-mono text-[11px] uppercase tracking-wider text-foreground/30">
+                    Coming Soon
+                  </div>
+                )}
               </div>
             </motion.div>
           ))}
         </AnimatePresence>
       </div>
 
-      {/* Source Code Modal */}
+      {/* Premium Source Code Modal */}
       <AnimatePresence>
         {viewSource && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
             onClick={() => setViewSource(null)}
           >
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-black/70 backdrop-blur-md" />
+
             <motion.div
-              initial={{ scale: 0.95, y: 20 }}
+              initial={{ scale: 0.92, y: 24 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 20 }}
+              exit={{ scale: 0.92, y: 24 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-3xl overflow-hidden rounded-2xl border border-border/60 bg-background shadow-2xl"
+              className="relative w-full max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-[#0d1117] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.8)]"
             >
-              <div className="flex items-center justify-between border-b border-border/40 bg-muted/30 px-6 py-4">
-                <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground">
-                  Premium Glow - React / Tailwind
-                </h3>
-                <button
-                  type="button"
-                  onClick={() => setViewSource(null)}
-                  className="rounded-full bg-foreground/5 p-1.5 text-foreground/50 transition-colors hover:bg-foreground/10 hover:text-foreground"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-4">
-                    <path d="M18 6 6 18M6 6l12 12" />
-                  </svg>
-                </button>
+              {/* Terminal header bar */}
+              <div className="flex items-center justify-between border-b border-white/[0.06] bg-[#161b22] px-5 py-3.5">
+                <div className="flex items-center gap-3">
+                  {/* Mac-style traffic lights */}
+                  <div className="flex items-center gap-1.5">
+                    <div className="size-3 rounded-full bg-[#ff5f57]" />
+                    <div className="size-3 rounded-full bg-[#febc2e]" />
+                    <div className="size-3 rounded-full bg-[#28c840]" />
+                  </div>
+                  <div className="h-4 w-px bg-white/10" />
+                  <div className="flex items-center gap-2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="size-3.5 text-[#58a6ff]">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                    </svg>
+                    <span className="font-mono text-[11px] font-medium text-[#8b949e]">AnimatedPremiumButton.tsx</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  {/* Dependencies badge */}
+                  <div className="flex items-center gap-1.5 rounded-md border border-[#30363d] bg-[#21262d] px-2.5 py-1">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-3 text-[#58a6ff]">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m21 7-9-4-9 4m18 0-9 4m9-4v10l-9 4m0-14L3 7m9 4v10M3 7v10l9 4" />
+                    </svg>
+                    <span className="font-mono text-[9px] text-[#8b949e]">lucide-react · motion</span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setViewSource(null)}
+                    className="flex size-7 items-center justify-center rounded-lg bg-white/[0.04] text-[#8b949e] transition-colors hover:bg-white/[0.08] hover:text-white"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-3.5">
+                      <path d="M18 6 6 18M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
               </div>
-              <div className="max-h-[60vh] overflow-y-auto p-6">
-                <pre className="rounded-xl bg-[#0d1117] p-5 text-sm">
-                  <code className="font-mono text-[13px] leading-relaxed text-[#c9d1d9] whitespace-pre-wrap">
-                    {PREMIUM_CODE}
+
+              {/* Install command bar */}
+              <div className="border-b border-white/[0.06] bg-[#0d1117] px-5 py-2.5">
+                <div className="flex items-center gap-2 rounded-lg border border-[#30363d] bg-[#161b22] px-3 py-2">
+                  <span className="font-mono text-[11px] text-[#3fb950]">$</span>
+                  <code className="font-mono text-[11px] text-[#8b949e]">
+                    pnpm add lucide-react motion
                   </code>
-                </pre>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      void navigator.clipboard.writeText("pnpm add lucide-react motion")
+                      toast.success("Install command copied!")
+                    }}
+                    className="ml-auto flex items-center gap-1 rounded border border-[#30363d] bg-[#21262d] px-2 py-0.5 font-mono text-[9px] text-[#8b949e] transition-colors hover:text-white"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="size-2.5">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                    </svg>
+                    copy
+                  </button>
+                </div>
               </div>
-              <div className="border-t border-border/40 bg-muted/30 px-6 py-4 flex justify-between items-center">
-                <p className="text-xs text-foreground/50">Install lucide-react and motion/react</p>
+
+              {/* Syntax-highlighted code */}
+              <div className="max-h-[55vh] overflow-y-auto">
+                <SyntaxHighlighter
+                  language="tsx"
+                  style={oneDark}
+                  customStyle={{
+                    margin: 0,
+                    padding: "20px 24px",
+                    background: "#0d1117",
+                    fontSize: "12.5px",
+                    lineHeight: "1.7",
+                    fontFamily: "'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace",
+                  }}
+                  showLineNumbers
+                  lineNumberStyle={{
+                    color: "#484f58",
+                    minWidth: "2.5em",
+                    paddingRight: "16px",
+                    userSelect: "none",
+                  }}
+                >
+                  {PREMIUM_CODE}
+                </SyntaxHighlighter>
+              </div>
+
+              {/* Footer action bar */}
+              <div className="flex items-center justify-between border-t border-white/[0.06] bg-[#161b22] px-5 py-3">
+                <div className="flex items-center gap-2">
+                  <div className="flex size-5 items-center justify-center rounded bg-emerald-500/10 text-emerald-500">
+                    <svg fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" className="size-3">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span className="font-mono text-[10px] text-[#8b949e]">Premium Glow · React + Tailwind CSS</span>
+                </div>
                 <button
                   type="button"
-                  onClick={() => {
-                    navigator.clipboard.writeText(PREMIUM_CODE)
-                    alert("Copied to clipboard!")
-                  }}
-                  className="rounded-lg bg-primary px-4 py-2 font-mono text-[11px] font-semibold text-primary-foreground transition-all hover:opacity-90"
+                  onClick={() => void handleCopy()}
+                  className={`flex items-center gap-2 rounded-lg px-4 py-2 font-mono text-[11px] font-semibold uppercase tracking-wider transition-all duration-200 ${
+                    copied
+                      ? "bg-emerald-500/20 text-emerald-400"
+                      : "bg-[#238636] text-white hover:bg-[#2ea043]"
+                  }`}
                 >
-                  Copy Code
+                  {copied ? (
+                    <>
+                      <svg fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" className="size-3.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="size-3.5">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                      </svg>
+                      Copy Code
+                    </>
+                  )}
                 </button>
               </div>
             </motion.div>

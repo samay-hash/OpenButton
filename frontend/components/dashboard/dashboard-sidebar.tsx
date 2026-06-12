@@ -139,7 +139,7 @@ export function DashboardSidebar() {
       <aside className="hidden w-[240px] shrink-0 border-r border-border/40 bg-background/60 backdrop-blur-xl lg:block">
         <div className="sticky top-0 flex h-screen flex-col">
           <div className="flex h-14 items-center border-b border-border/40 px-5">
-            <BrandLogo />
+            <BrandLogo href="/dashboard" />
           </div>
           <div className="flex-1 overflow-y-auto">
             {navContent}
@@ -192,7 +192,7 @@ export function DashboardSidebar() {
               className="fixed left-0 top-0 z-[56] h-screen w-[260px] border-r border-border/40 bg-background/95 backdrop-blur-xl lg:hidden"
             >
               <div className="flex h-14 items-center border-b border-border/40 px-5">
-                <BrandLogo />
+                <BrandLogo href="/dashboard" />
               </div>
               {navContent}
             </motion.aside>
