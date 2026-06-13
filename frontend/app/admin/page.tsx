@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react"
 import { toast } from "sonner"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "motion/react"
 import { Users, ShoppingBag, Search, ShieldCheck, CheckCircle2, AlertCircle, RefreshCw, KeyRound, Wrench, LogOut } from "lucide-react"
 import { FlickeringGrid } from "@/components/ui/flickering-grid"
 import { DashedH } from "@/components/landing/dashed-h"
