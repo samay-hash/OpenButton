@@ -66,7 +66,7 @@ export default function AdminPage() {
         throw new Error("Server returned non-JSON response. Check your BACKEND_URL.")
       }
 
-      const usersData = await usersRes.json()
+      const usersData: any = await usersRes.json()
       
       if (!usersRes.ok) {
         if (usersRes.status === 401) {
@@ -80,7 +80,7 @@ export default function AdminPage() {
       const purchRes = await fetch(`${API_URL}/api/admin/all-purchases`, {
         headers: { "x-admin-secret": currentSecret }
       })
-      const purchData = await purchRes.json()
+      const purchData: any = await purchRes.json()
       setPurchases(purchData.data || [])
       
     } catch (err) {
@@ -112,7 +112,7 @@ export default function AdminPage() {
         razorpayPaymentId: fixPaymentId || undefined
       })
     }).then(async (res) => {
-      const data = await res.json()
+      const data: any = await res.json()
       if (!res.ok) throw new Error(data.error || "Failed to fix purchase")
       return data
     })
