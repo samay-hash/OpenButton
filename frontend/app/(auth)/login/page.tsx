@@ -30,7 +30,7 @@ export default function LoginPage() {
         localStorage.setItem("token", data.token)
         localStorage.setItem("user", JSON.stringify({ name: data.name, email: data.email }))
         document.cookie = `token=${data.token}; path=/; max-age=2592000`
-        window.location.href = "/dashboard"
+        window.location.href = "/dashboard/components"
       } else {
         setError(data.error || "Invalid credentials. Please try again.")
       }

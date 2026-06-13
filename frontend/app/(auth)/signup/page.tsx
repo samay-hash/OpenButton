@@ -31,7 +31,7 @@ export default function SignupPage() {
         localStorage.setItem("token", data.token)
         localStorage.setItem("user", JSON.stringify({ name: data.name, email: data.email }))
         document.cookie = `token=${data.token}; path=/; max-age=2592000`
-        window.location.href = "/dashboard"
+        window.location.href = "/dashboard/components"
       } else {
         setError(data.error || "Signup failed. Please try again.")
       }
@@ -107,7 +107,7 @@ export default function SignupPage() {
                 required
                 autoComplete="name"
                 className="w-full rounded-xl border border-border/60 bg-muted/30 px-4 py-3 text-sm outline-none transition-all placeholder:text-muted-foreground/50 focus:border-primary/50 focus:bg-background focus:ring-4 focus:ring-primary/10"
-                placeholder="Samay Samrat"
+                placeholder="Your Name"
               />
             </div>
 

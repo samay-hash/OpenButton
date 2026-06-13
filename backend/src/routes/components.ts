@@ -4,7 +4,7 @@ import Purchase from '../models/Purchase';
 
 const router = Router();
 
-// GET /api/components — list all components
+
 router.get('/', async (req: Request, res: Response) => {
   try {
     const { category } = req.query;
@@ -13,17 +13,18 @@ router.get('/', async (req: Request, res: Response) => {
       result = components.filter(c => c.category.toLowerCase() === category.toLowerCase());
     }
 
-    // Check user purchases
     const user = (req as any).user;
     let purchasedComponentIds: string[] = [];
+    let hasFullAccess = false;
     if (user) {
       const purchases = await Purchase.find({ userId: user._id, status: 'COMPLETED' });
-      purchasedComponentIds = purchases.map(p => p.componentId);
+      purchasedComponentIds = purchases.filter(p => p.type === 'component' && p.componentId).map(p => p.componentId as string);
+      hasFullAccess = purchases.some(p => p.type === 'bundle' || p.type === 'lifetime');
     }
 
     const modifiedResult = result.map(c => ({
       ...c,
-      unlocked: purchasedComponentIds.includes(c.id),
+      unlocked: hasFullAccess || !c.isPremium || purchasedComponentIds.includes(c.id),
     }));
 
     res.json({ data: modifiedResult, total: modifiedResult.length });
@@ -32,14 +33,14 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-// GET /api/components/:id — single component
+
 router.get('/:id', (req: Request, res: Response) => {
   const comp = components.find(c => c.id === req.params.id);
   if (!comp) return res.status(404).json({ error: 'Component not found' });
   res.json({ data: comp });
 });
 
-// POST /api/components/:id/unlock — unlock a component
+
 router.post('/:id/unlock', (req: Request, res: Response) => {
   const comp = components.find(c => c.id === req.params.id);
   if (!comp) return res.status(404).json({ error: 'Component not found' });

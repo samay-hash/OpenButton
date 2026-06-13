@@ -92,19 +92,13 @@ export function FinalCta() {
           app.
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-          <a
-            href="#showcase"
-            onClick={(e) => {
-              e.preventDefault()
-              document
-                .getElementById("showcase")
-                ?.scrollIntoView({ behavior: "smooth", block: "start" })
-            }}
+          <Link
+            href="/signup"
             className="group inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-[0_14px_40px_-18px_var(--primary)] transition hover:opacity-95"
           >
             Browse Buttons
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-          </a>
+          </Link>
           <a
             href="https://github.com/samay-hash/openbutton"
             target="_blank"

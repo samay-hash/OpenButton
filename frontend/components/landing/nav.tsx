@@ -70,17 +70,13 @@ export function Nav() {
             Sign in
             <ArrowRight className="size-3.5" />
           </Link>
-          <a
-            href="#showcase"
-            onClick={(e) => {
-              e.preventDefault()
-              scrollToHash("#showcase")
-            }}
+          <Link
+            href="/signup"
             className="group inline-flex items-center gap-1.5 rounded-md bg-primary px-3.5 py-1.5 text-[12px] font-medium text-primary-foreground transition hover:opacity-90"
           >
             Browse Buttons
             <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-          </a>
+          </Link>
         </div>
 
         {/* Mobile hamburger */}
@@ -171,18 +167,14 @@ export function Nav() {
                   Sign in
                   <ArrowRight className="size-5 transition-transform group-hover:translate-x-0.5" />
                 </Link>
-                <a
-                  href="#showcase"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    setOpen(false)
-                    setTimeout(() => scrollToHash("#showcase"), 50)
-                  }}
+                <Link
+                  href="/signup"
+                  onClick={() => setOpen(false)}
                   className="group flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 font-mono text-lg font-bold text-primary-foreground uppercase transition hover:opacity-90"
                 >
                   Browse Buttons
                   <ArrowRight className="size-5 transition-transform group-hover:translate-x-0.5" />
-                </a>
+                </Link>
               </motion.div>
             </div>
           </motion.div>

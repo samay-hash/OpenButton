@@ -20,7 +20,7 @@ const SECTIONS = [
     ),
   },
   {
-    label: "UI Components",
+    label: "Components",
     href: "/dashboard/components",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="size-[18px]">
@@ -31,62 +31,31 @@ const SECTIONS = [
     ),
   },
   {
-    label: "Algorithm Lab",
-    href: "/dashboard/algorithms",
+    label: "Pricing",
+    href: "/dashboard/pricing",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="size-[18px]">
-        <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" />
-        <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z" />
+        <rect x="2" y="5" width="20" height="14" rx="2" />
+        <line x1="2" y1="10" x2="22" y2="10" />
       </svg>
     ),
   },
   {
-    label: "Typography & UX",
-    href: "/dashboard/typography",
+    label: "Changelog",
+    href: "/dashboard/changelog",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="size-[18px]">
-        <polyline points="4 7 4 4 20 4 20 7" />
-        <line x1="9" y1="20" x2="15" y2="20" />
-        <line x1="12" y1="4" x2="12" y2="20" />
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
       </svg>
     ),
   },
   {
-    label: "Client Guide",
-    href: "/dashboard/client-guide",
+    label: "Upcoming",
+    href: "/dashboard/upcoming",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="size-[18px]">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-      </svg>
-    ),
-  },
-  {
-    label: "Idea Builder",
-    href: "/dashboard/idea-builder",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="size-[18px]">
-        <path d="M12 2v8" />
-        <path d="m4.93 10.93 1.41 1.41" />
-        <path d="M2 18h2" />
-        <path d="M20 18h2" />
-        <path d="m19.07 10.93-1.41 1.41" />
-        <path d="M22 22H2" />
-        <path d="m9 22 3-8 3 8" />
-        <circle cx="12" cy="6" r="4" fill="none" />
-      </svg>
-    ),
-  },
-  {
-    label: "Image Studio",
-    href: "/dashboard/image-studio",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="size-[18px]">
-        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-        <circle cx="9" cy="9" r="2" />
-        <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+        <path d="M12 2v20" />
+        <path d="m17 5-5-3-5 3" />
       </svg>
     ),
   },

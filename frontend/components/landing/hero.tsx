@@ -135,14 +135,11 @@ export function Hero() {
             transition={{ duration: 0.7, ease, delay: 0.1 }}
             className="text-[2rem] leading-[1.06] font-medium tracking-[-0.03em] text-balance sm:text-5xl lg:text-[4.2rem]"
           >
-            Click Worthy components,
+            Premium Button Components
             <br />
-            <span className="relative inline-block whitespace-nowrap">
-              <span className="text-primary">out of the</span>
-              <span className="bg-gradient-to-br from-foreground via-foreground to-foreground/60 bg-clip-text text-transparent">
-                {" "}
-                box.
-              </span>
+            <span className="relative inline-block whitespace-nowrap"> for
+              <span className="text-primary"> Developers</span>
+              
               <svg
                 aria-hidden
                 viewBox="0 0 320 12"
@@ -169,11 +166,9 @@ export function Hero() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease, delay: 0.3 }}
-            className="mt-6 max-w-2xl text-[14px] leading-relaxed text-balance text-foreground/60 sm:text-[15px]"
+            className="mt-6 max-w-2xl text-[16px] leading-relaxed text-balance text-foreground/60 sm:text-[18px] font-medium"
           >
-            Stop wrestling with bloated libraries. Discover meticulously
-            crafted, accessible, and framework-agnostic components designed for
-            modern web applications.
+            Copy. Paste. Ship.
           </motion.p>
 
           {/* CTAs */}
@@ -184,14 +179,12 @@ export function Hero() {
             className="mt-10 flex items-center justify-center"
           >
             <AnimatedPremiumButton
-              href="#showcase"
+              href="/signup"
               text="Browse Buttons"
               icon={<RiArrowRightLine className="size-4" />}
               onClick={(e) => {
                 e.preventDefault()
-                document.getElementById("showcase")?.scrollIntoView({
-                  behavior: "smooth",
-                })
+                window.location.href = "/signup"
               }}
             />
           </motion.div>
@@ -201,25 +194,21 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, ease, delay: 0.7 }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-4 text-[12px] text-foreground/40 sm:gap-6"
+            className="mt-8 flex flex-wrap items-center justify-center gap-4 text-[13px] text-foreground/50 sm:gap-6 font-medium"
           >
             <span className="flex items-center gap-1.5 font-mono">
-              <span className="text-foreground/70">
-                <AnimatedCounter target={2400} suffix="+" />
+              <span className="text-foreground/80">
+                <AnimatedCounter target={50} suffix="+" />
               </span>{" "}
-              buttons sold
+              production-ready buttons
             </span>
             <span className="hidden h-3 w-px bg-border/60 sm:block" />
             <span className="flex items-center gap-1.5 font-mono">
-              <span className="text-foreground/70">
-                <AnimatedCounter target={890} suffix="+" />
+              Starting at{" "}
+              <span className="text-foreground/80">
+                ₹39
               </span>{" "}
-              developers
-            </span>
-            <span className="hidden h-3 w-px bg-border/60 sm:block" />
-            <span className="flex items-center gap-1.5 font-mono">
-              <span className="text-foreground/70">4.9</span>
-              <span className="text-yellow-400">★</span> avg rating
+              only
             </span>
           </motion.div>
         </div>

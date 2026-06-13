@@ -6,7 +6,7 @@ import Purchase from '../models/Purchase';
 
 const router = Router();
 
-// Initialize Razorpay instance
+ 
 const getRazorpayInstance = () => {
   return new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID || '',
@@ -14,12 +14,11 @@ const getRazorpayInstance = () => {
   });
 };
 
-// POST /api/payments/create-order
-router.post('/create-order', async (req: Request, res: Response) => {
+// POST /api/payments/component
+router.post('/component', async (req: Request, res: Response) => {
   try {
     const { componentId } = req.body;
     
-    // Validate component and get price
     const comp = components.find(c => c.id === componentId);
     if (!comp) {
       return res.status(404).json({ error: 'Component not found' });
@@ -34,6 +33,7 @@ router.post('/create-order', async (req: Request, res: Response) => {
       currency: "INR",
       receipt: `receipt_${Date.now()}_${componentId}`,
       notes: {
+        type: 'component',
         componentId,
         componentName: comp.name
       }
@@ -45,6 +45,7 @@ router.post('/create-order', async (req: Request, res: Response) => {
     const user = (req as any).user;
     await Purchase.create({
       userId: user._id,
+      type: 'component',
       componentId,
       razorpayOrderId: order.id,
       status: 'PENDING',
@@ -65,6 +66,84 @@ router.post('/create-order', async (req: Request, res: Response) => {
   } catch (error: any) {
     console.error('Razorpay Error:', error);
     res.status(500).json({ success: false, error: 'Failed to create order', details: error?.message });
+  }
+});
+
+// POST /api/payments/bundle
+router.post('/bundle', async (req: Request, res: Response) => {
+  try {
+    const amountInPaise = 299 * 100; // ₹299
+    const instance = getRazorpayInstance();
+    
+    const options = {
+      amount: amountInPaise,
+      currency: "INR",
+      receipt: `receipt_${Date.now()}_bundle`,
+      notes: {
+        type: 'bundle',
+        description: 'OpenButton V1 Bundle (30 Components)'
+      }
+    };
+
+    const order = await instance.orders.create(options);
+    
+    const user = (req as any).user;
+    await Purchase.create({
+      userId: user._id,
+      type: 'bundle',
+      razorpayOrderId: order.id,
+      status: 'PENDING',
+    });
+    
+    res.json({
+      success: true,
+      orderId: order.id,
+      amount: order.amount,
+      currency: order.currency
+    });
+
+  } catch (error: any) {
+    console.error('Razorpay Error:', error);
+    res.status(500).json({ success: false, error: 'Failed to create bundle order', details: error?.message });
+  }
+});
+
+// POST /api/payments/lifetime
+router.post('/lifetime', async (req: Request, res: Response) => {
+  try {
+    const amountInPaise = 799 * 100; // ₹799
+    const instance = getRazorpayInstance();
+    
+    const options = {
+      amount: amountInPaise,
+      currency: "INR",
+      receipt: `receipt_${Date.now()}_lifetime`,
+      notes: {
+        type: 'lifetime',
+        description: 'OpenButton Lifetime Access'
+      }
+    };
+
+    const order = await instance.orders.create(options);
+    
+    const user = (req as any).user;
+    await Purchase.create({
+      userId: user._id,
+      type: 'lifetime',
+      razorpayOrderId: order.id,
+      status: 'PENDING',
+    });
+    
+    res.json({
+      success: true,
+      orderId: order.id,
+      amount: order.amount,
+      currency: order.currency
+    });
+
+  } catch (error: any) {
+    console.error('Razorpay Error:', error);
+    res.status(500).json({ success: false, error: 'Failed to create lifetime order', details: error?.message });
   }
 });
 

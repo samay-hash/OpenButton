@@ -7,9 +7,15 @@ const purchaseSchema = new mongoose.Schema(
       required: true,
       ref: 'User',
     },
+    type: {
+      type: String,
+      enum: ['component', 'bundle', 'lifetime'],
+      default: 'component',
+      required: true,
+    },
     componentId: {
       type: String,
-      required: true,
+      // Only required for component purchases
     },
     razorpayOrderId: {
       type: String,

@@ -339,14 +339,10 @@ export function Hero() {
             transition={{ duration: 0.7, ease, delay: 0.1 }}
             className="mt-3 text-[2rem] leading-[1.06] font-medium tracking-[-0.03em] text-balance sm:text-5xl lg:text-[4.2rem]"
           >
-            Click Worthy components,
+            Premium micro interactions,
             <br />
-            <span className="relative inline-block whitespace-nowrap">
-              <span className="text-primary">out of the</span>
-              <span className="bg-gradient-to-br from-foreground via-foreground to-foreground/60 bg-clip-text text-transparent">
-                {" "}
-                box.
-              </span>
+            <span className="relative inline-block whitespace-nowrap"> for
+              <span className="text-primary">modern websites</span>
               <svg
                 aria-hidden
                 viewBox="0 0 320 12"

@@ -7,12 +7,9 @@ import { useEffect, useState } from "react"
 
 const SECTION_TITLES: Record<string, string> = {
   "/dashboard": "Overview",
-  "/dashboard/components": "UI Components",
-  "/dashboard/algorithms": "Algorithm Lab",
-  "/dashboard/typography": "Typography & UX",
-  "/dashboard/client-guide": "Client Guide",
-  "/dashboard/idea-builder": "Idea Builder",
-  "/dashboard/image-studio": "Image Studio",
+  "/dashboard/components": "Components",
+  "/dashboard/pricing": "Pricing",
+  "/dashboard/changelog": "Changelog",
 }
 
 export function DashboardHeader() {
@@ -138,7 +135,7 @@ export function DashboardHeader() {
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-3.5">
                       <path d="M12 2L2 7l10 5 10-5-10-5Z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" />
                     </svg>
-                    My Components
+                    Components
                   </Link>
                 </div>
 
