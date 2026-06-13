@@ -13,6 +13,16 @@ const adminAuth = (req: Request, res: Response, next: any) => {
   next();
 };
 
+// GET /api/admin/users - list all users
+router.get('/users', adminAuth, async (req: Request, res: Response) => {
+  try {
+    const users = await User.find().sort({ createdAt: -1 });
+    res.json({ success: true, count: users.length, data: users });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // GET /api/admin/purchases - list all completed purchases
 router.get('/purchases', adminAuth, async (req: Request, res: Response) => {
   try {
