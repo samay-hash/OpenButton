@@ -115,7 +115,7 @@ export default function UpcomingPage() {
       >
         <h2 className="text-xl font-bold sm:text-2xl">Shape the future of OpenButton</h2>
         <p className="mx-auto mt-3 max-w-lg text-[14px] text-foreground/60 leading-relaxed">
-          We build what our community wants. If there's a specific component, guide, or template you'd like to see, let us know!
+          We build what our community wants. If there&apos;s a specific component, guide, or template you&apos;d like to see, let us know!
         </p>
         <button className="mt-6 rounded-full bg-primary px-8 py-3 text-sm font-bold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98]">
           Request a Feature
