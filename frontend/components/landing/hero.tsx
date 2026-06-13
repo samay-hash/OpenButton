@@ -206,7 +206,7 @@ export function Hero() {
             <span className="flex items-center gap-1.5 font-mono">
               Starting at{" "}
               <span className="text-foreground/80">
-                ₹39
+                ₹35 / $1
               </span>{" "}
               only
             </span>

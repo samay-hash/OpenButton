@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from "motion/react"
 import { useRouter } from "next/navigation"
 import { AnimatedPremiumButton } from "@/components/landing/animated-premium-button"
 import { toast } from "sonner"
+import { useGeoPricing } from "@/hooks/useGeoPricing"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism"
 
@@ -140,6 +141,7 @@ export default function ComponentsPage() {
   const [isProcessing, setIsProcessing] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
   const router = useRouter()
+  const { currency, getPrice, loading } = useGeoPricing()
 
   useEffect(() => {
     const fetchComponents = async () => {
@@ -184,7 +186,7 @@ export default function ComponentsPage() {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify({ componentId: comp.id })
+        body: JSON.stringify({ componentId: comp.id, currency })
       })
       const data = (await res.json()) as any
       
@@ -372,7 +374,7 @@ export default function ComponentsPage() {
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-[16px] font-bold text-black">{comp.name}</h3>
                   <span className="font-sans text-[18px] font-bold text-[#f59e0b]">
-                    ₹{comp.price}
+                    {!loading ? `${getPrice('component').symbol}${getPrice('component').value}` : ""}
                   </span>
                 </div>
                 
@@ -431,7 +433,7 @@ export default function ComponentsPage() {
             Get instant access to all 30 premium components, full source code, and commercial usage rights.
           </p>
           <button onClick={() => router.push('/dashboard/pricing')} className="mt-8 rounded-full bg-primary px-8 py-3.5 font-bold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98]">
-            Unlock All Components for ₹299
+            Unlock All Components for {!loading ? `${getPrice('bundle').symbol}${getPrice('bundle').value}` : "..."}
           </button>
         </div>
       )}
@@ -555,10 +557,10 @@ export default function ComponentsPage() {
                        <h3 className="text-lg font-bold text-white mb-2">Component Locked</h3>
                        <p className="text-sm text-[#8b949e] mb-6">Unlock {activeComp?.name} to get the full source code and use it in your projects.</p>
                        <button onClick={() => { setViewSource(null); handleUnlock(activeComp); }} className="w-full mb-3 flex justify-center items-center gap-2 rounded-xl bg-primary py-3 text-sm font-bold text-primary-foreground transition-all hover:opacity-90">
-                          Unlock Component (₹{activeComp?.price})
+                          Unlock Component ({!loading ? `${getPrice('component').symbol}${getPrice('component').value}` : "..."})
                        </button>
                        <button onClick={() => router.push('/dashboard/pricing')} className="w-full rounded-xl bg-white/[0.04] border border-white/10 py-3 text-sm font-bold text-white transition-all hover:bg-white/[0.08]">
-                          Unlock All 30 for ₹299
+                          Unlock All 30 for {!loading ? `${getPrice('bundle').symbol}${getPrice('bundle').value}` : "..."}
                        </button>
                      </div>
                   </div>

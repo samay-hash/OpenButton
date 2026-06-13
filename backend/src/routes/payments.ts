@@ -17,20 +17,21 @@ const getRazorpayInstance = () => {
 // POST /api/payments/component
 router.post('/component', async (req: Request, res: Response) => {
   try {
-    const { componentId } = req.body;
+    const { componentId, currency } = req.body;
     
     const comp = components.find(c => c.id === componentId);
     if (!comp) {
       return res.status(404).json({ error: 'Component not found' });
     }
 
-    const amountInPaise = comp.price * 100;
+    const finalCurrency = currency === 'USD' ? 'USD' : 'INR';
+    const amountInSmallestUnit = finalCurrency === 'USD' ? 100 : comp.price * 100; // $1 (100 cents) vs INR paise
 
     const instance = getRazorpayInstance();
     
     const options = {
-      amount: amountInPaise,
-      currency: "INR",
+      amount: amountInSmallestUnit,
+      currency: finalCurrency,
       receipt: `receipt_${Date.now()}_${componentId}`,
       notes: {
         type: 'component',
@@ -72,12 +73,15 @@ router.post('/component', async (req: Request, res: Response) => {
 // POST /api/payments/bundle
 router.post('/bundle', async (req: Request, res: Response) => {
   try {
-    const amountInPaise = 299 * 100; // ₹299
+    const { currency } = req.body;
+    const finalCurrency = currency === 'USD' ? 'USD' : 'INR';
+    const amountInSmallestUnit = finalCurrency === 'USD' ? 800 : 299 * 100; // $8 (800 cents) vs ₹299 (29900 paise)
+
     const instance = getRazorpayInstance();
     
     const options = {
-      amount: amountInPaise,
-      currency: "INR",
+      amount: amountInSmallestUnit,
+      currency: finalCurrency,
       receipt: `receipt_${Date.now()}_bundle`,
       notes: {
         type: 'bundle',
@@ -111,12 +115,15 @@ router.post('/bundle', async (req: Request, res: Response) => {
 // POST /api/payments/lifetime
 router.post('/lifetime', async (req: Request, res: Response) => {
   try {
-    const amountInPaise = 799 * 100; // ₹799
+    const { currency } = req.body;
+    const finalCurrency = currency === 'USD' ? 'USD' : 'INR';
+    const amountInSmallestUnit = finalCurrency === 'USD' ? 2000 : 799 * 100; // $20 (2000 cents) vs ₹799 (79900 paise)
+
     const instance = getRazorpayInstance();
     
     const options = {
-      amount: amountInPaise,
-      currency: "INR",
+      amount: amountInSmallestUnit,
+      currency: finalCurrency,
       receipt: `receipt_${Date.now()}_lifetime`,
       notes: {
         type: 'lifetime',

@@ -11,6 +11,7 @@ import { ease, SHOWCASE_BUTTONS } from "@/components/landing/constants"
 import { AnimatedPremiumButton } from "@/components/landing/animated-premium-button"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { useGeoPricing } from "@/hooks/useGeoPricing"
 
 /* ─── Button style renderers — each renders a unique interactive button ─── */
 const BUTTON_RENDERERS: Record<
@@ -103,6 +104,7 @@ export function ButtonShowcase() {
   const [hoveredId, setHoveredId] = useState<string | null>(null)
   const [isProcessing, setIsProcessing] = useState<string | null>(null)
   const router = useRouter()
+  const { currency, getPrice, loading } = useGeoPricing()
 
   const handleBuyNow = async (componentId: string) => {
     const token = localStorage.getItem("token")
@@ -113,13 +115,13 @@ export function ButtonShowcase() {
 
     try {
       setIsProcessing(componentId)
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payments/create-order`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payments/component`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify({ componentId })
+        body: JSON.stringify({ componentId, currency })
       })
       const data = (await res.json()) as any
       
@@ -339,7 +341,7 @@ export function ButtonShowcase() {
                         className="font-mono text-[15px] font-semibold tracking-tight"
                         style={{ color: "var(--gold, var(--primary))" }}
                       >
-                        ₹{btn.price}
+                        {!loading ? `${getPrice('component').symbol}${getPrice('component').value}` : ""}
                       </span>
                     </div>
                   </div>
