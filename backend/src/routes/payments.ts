@@ -175,6 +175,23 @@ router.post('/verify', async (req: Request, res: Response) => {
         purchase.status = 'COMPLETED';
         purchase.razorpayPaymentId = razorpay_payment_id;
         await purchase.save();
+        console.log(`✅ Payment verified for order: ${razorpay_order_id}, component: ${componentId || purchase.componentId}`);
+      } else {
+        // Purchase record not found - create it now so user gets access
+        const user = (req as any).user;
+        if (user && componentId) {
+          await Purchase.create({
+            userId: user._id,
+            type: 'component',
+            componentId,
+            razorpayOrderId: razorpay_order_id,
+            razorpayPaymentId: razorpay_payment_id,
+            status: 'COMPLETED',
+          });
+          console.log(`✅ Created purchase record (fallback) for order: ${razorpay_order_id}`);
+        } else {
+          console.error(`❌ Purchase not found for order: ${razorpay_order_id}`);
+        }
       }
 
       res.json({ success: true, message: "Payment verified successfully" });

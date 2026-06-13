@@ -202,9 +202,13 @@ export default function ComponentsPage() {
         description: `Unlock ${data.component.name}`,
         order_id: data.orderId,
         handler: async function (response: any) {
+          const token = localStorage.getItem("token")
           const verifyRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payments/verify`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            },
             body: JSON.stringify({
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_order_id: response.razorpay_order_id,
@@ -219,14 +223,14 @@ export default function ComponentsPage() {
             setViewSource(comp.id)
             setIsProcessing(null)
           } else {
-            toast.error("Payment verification failed.")
+            toast.error("Payment verification failed. Please contact support with your payment ID: " + response.razorpay_payment_id)
             setIsProcessing(null)
           }
         },
         prefill: {
-          name: "Samay Samrat",
-          email: "samay@example.com",
-          contact: "9999999999"
+          name: JSON.parse(localStorage.getItem("user") ?? "{}")?.name ?? "",
+          email: JSON.parse(localStorage.getItem("user") ?? "{}")?.email ?? "",
+          contact: ""
         },
         theme: {
           color: "#3b82f6"
