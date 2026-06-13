@@ -8,6 +8,7 @@ import { authMiddleware } from './middleware/auth';
 import authRouter from './routes/auth';
 import componentsRouter from './routes/components';
 import paymentsRouter from './routes/payments';
+import adminRouter from './routes/admin';
 
 connectDB();
 
@@ -28,6 +29,9 @@ app.use('/api/auth', authRouter);
 // Protected API Routes (require auth)
 app.use('/api/components', authMiddleware, componentsRouter);
 app.use('/api/payments', authMiddleware, paymentsRouter);
+
+// Admin Routes (protected by x-admin-secret header, NOT public JWT)
+app.use('/api/admin', adminRouter);
 
 app.listen(port, () => {
   console.log(`🚀 Backend running on http://localhost:${port}`);
