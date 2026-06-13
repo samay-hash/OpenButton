@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import User from '../models/User';
 import generateToken from '../utils/generateToken';
+import { authMiddleware } from '../middleware/auth';
 
 const router = Router();
 
@@ -62,7 +63,6 @@ router.post('/login', async (req, res) => {
 
 // @route   GET /api/auth/profile
 // @desc    Get user profile
-import { authMiddleware } from '../middleware/auth';
 router.get('/profile', authMiddleware, async (req: any, res) => {
   try {
     const user = await User.findById(req.user._id);

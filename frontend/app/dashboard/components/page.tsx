@@ -310,7 +310,7 @@ export default function ComponentsPage() {
             ))
           ) : (
             filtered.map((comp, i) => {
-              const isComingSoon = comp.style !== "premium-glow"
+              const isComingSoon = false  // all components are real — backend controls availability
             const isDark = darkPreview[comp.id] ?? false
 
             return (
